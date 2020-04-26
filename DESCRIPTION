@@ -1,5 +1,5 @@
 Package: R2easyR
-Title: R2easyR
+Title: Facilitates Mapping Experimental RNA Reactivity Data to Secondary Structures Drawn with R2R
 Version: 1.0
 Authors@R: 
     person(given = "Jacob",
