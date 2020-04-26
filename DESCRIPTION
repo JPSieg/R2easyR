@@ -1,0 +1,19 @@
+Package: R2easyR
+Title: R2easyR
+Version: 1.0
+Authors@R: 
+    person(given = "Jacob",
+           family = "Sieg",
+           role = c("aut", "cre"),
+           email = "jus841@psu.edu",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: A package that facilitates displaying RNA reactivity data on a RNA secondary structures when used with R2R drawing software. Includes (1) functions to read common RNA lab data formats into R (.ct and .react files), (2) A function that generates a currated list of pallets that look good on a RNA secondary structure, (3) a function that assigns colors based on experimental reactivity data, and (4) a function that writes a Stockholm file that goes directly into R2R to generate a secondary structure.
+License: None
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+Imports:
+  ggplot2,
+  viridis,
+  RColorBrewer,
+  R.utils
