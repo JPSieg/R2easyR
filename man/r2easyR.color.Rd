@@ -6,7 +6,7 @@
 \usage{
 r2easyR.color(
   data_frame,
-  pallet,
+  palette,
   no_data = "dimgrey",
   abs_reactivity_threshold = 0
 )
@@ -14,7 +14,7 @@ r2easyR.color(
 \arguments{
 \item{data_frame}{A data_frame containing reactivity values in a column labeled "Reactivity"}
 
-\item{pallet}{A pallet contisting of a vector containing 35 R colors. Compatible pallets are easily generated with r2easyR.pallets or r2easyR.custom.pallet.}
+\item{palette}{A palette contisting of a vector containing 35 R colors. Compatible palettes are easily generated with r2easyR.palettes or r2easyR.custom.palette.}
 
 \item{no_data}{The color you want the nucleotide to have when there is no data. Defaule = "dimgrey"}
 

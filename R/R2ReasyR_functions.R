@@ -62,14 +62,14 @@ read.react = function(data_file){
   output <- reactivity
 }
 
-#'Generates a custom pallet
+#'Generates a custom palette
 #'
-#'Makes a custom R2Reasy pallet from a vector containing less than 35 colors
+#'Makes a custom R2Reasy palette from a vector containing less than 35 colors
 #'
 #'@param colors A vector containing less than 35 R colors
-#'@return A custom pallet that can be used by r2easyR.color
+#'@return A custom palette that can be used by r2easyR.color
 #' @export
-r2easyR.custom.pallet = function(colors){
+r2easyR.custom.palette = function(colors){
   a <- rep(colors[1], (floor(35/length(colors)) + (35 - (floor(35/length(colors))*length(colors)))))
   for (i in c(2:length(colors))){
     a <- c(a, rep(colors[i], floor(35/length(colors))))
@@ -77,18 +77,18 @@ r2easyR.custom.pallet = function(colors){
   pallet <- a
 }
 
-#'Generates a list of pallets
+#'Generates a list of palettes
 #'
-#'Makes a list of 59 color pallets for r2easyR.colors. Also saves a PDF depicting
-#'all of the color pallets in your current working directory. Color pallets are generated using RColorBrewer
-#'or Viridis. ".l" pallets are recomended for coloring letters because they exclude light shades, which would be
-#'hard to see against a white background. ".c" pallets are recomended for for coloring circles behing letters
-#'because they exclude dark colors, which obscure the letter inside the circle. Viridis pallets, Viridis, Magma,
+#'Makes a list of 59 color palettes for r2easyR.colors. Also saves a PDF depicting
+#'all of the color palettes in your current working directory. Color palettes are generated using RColorBrewer
+#'or Viridis. ".l" palettes are recomended for coloring letters because they exclude light shades, which would be
+#'hard to see against a white background. ".c" palettes are recomended for for coloring circles behing letters
+#'because they exclude dark colors, which obscure the letter inside the circle. Viridis palettes, Viridis, Magma,
 #'Plasma, Inferno, and cividis are not recomended because they result in cluttered secondary structures.
 #'
-#'@return A list of 32 vectors containing Viridis and Colorbrewer pallets
+#'@return A list of 59 vectors containing Viridis and Colorbrewer palettes
 #' @export
-r2easyR.pallets = function(){
+r2easyR.palettes = function(){
   pallets_names <- c("Viridis",
                      "Magma",
                      "Plasma",
@@ -286,12 +286,12 @@ r2easyR.pallets = function(){
 #'PDF legend and a PDF depicting the reactivity values in your current working directory.
 #'
 #'@param data_frame A data_frame containing reactivity values in a column labeled "Reactivity"
-#'@param pallet A pallet contisting of a vector containing 35 R colors. Compatible pallets are easily generated with r2easyR.pallets or r2easyR.custom.pallet.
+#'@param palette A palette contisting of a vector containing 35 R colors. Compatible palettes are easily generated with r2easyR.palettes or r2easyR.custom.palette.
 #'@param abs_reactivity_threshold Minimum threshold for reactivity data to be mapped to a color. Default = 0. Using a higher threshold prevents numerous, but low reactivity values from cluttering up the finished picture.
 #'@param no_data The color you want the nucleotide to have when there is no data. Defaule = "dimgrey"
 #'@return A data frame containing a R2R label and Color column
 #' @export
-r2easyR.color = function(data_frame, pallet, no_data = "dimgrey", abs_reactivity_threshold = 0){
+r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivity_threshold = 0){
   if (min(data_frame$Reactivity, na.rm = TRUE) >= 0){ #For reactivity data where all values are greater than 0
     a <- c()
     for (i in c(1:length(data_frame$Reactivity))){
