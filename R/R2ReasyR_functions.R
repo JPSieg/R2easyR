@@ -251,17 +251,17 @@ r2easyR.palettes = function(){
   yvalues <- c(59:1)
   df <- data.frame("xaxis" = c(1:35)/35,
                    "yaxis" = yvalues[1],
-                   "Palette" = names(palettes)[1],
+                   "Palettes" = names(palettes)[1],
                    "Colour" = palettes[[1]])
   for (i in c(2:length(palettes_names))){
     df <- rbind(df, data.frame("xaxis" = c(1:35)/35,
                                "yaxis" = yvalues[i],
-                               "palettes" = names(palettes)[i],
+                               "Palettes" = names(palettes)[i],
                                "Colour" = palettes[[i]]))
   }
   graph <- ggplot2::ggplot(data = df, ggplot2::aes(x = xaxis, y = yaxis)) +
     ggplot2::geom_point(show.legend = FALSE, size = 3, shape = 15, colour = df$Colour) +
-    ggplot2::geom_text(data = df[df$xaxis == 1, ], ggplot2::aes(label = palette), nudge_x = 0.15, nudge_y = 0.08) +
+    ggplot2::geom_text(data = df[df$xaxis == 1, ], ggplot2::aes(label = names(palettes)), nudge_x = 0.15, nudge_y = 0.08) +
     ggplot2::xlab("Scale") +
     ggplot2::ylab("") +
     ggplot2::scale_x_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1), limits = c(0, 1.2)) +
