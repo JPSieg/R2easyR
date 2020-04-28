@@ -251,7 +251,7 @@ r2easyR.palettes = function(){
   yvalues <- c(59:1)
   df <- data.frame("xaxis" = c(1:35)/35,
                    "yaxis" = yvalues[1],
-                   "Palette" = names(palette)[1],
+                   "Palette" = names(palettes)[1],
                    "Colour" = palettes[[1]])
   for (i in c(2:length(palettes_names))){
     df <- rbind(df, data.frame("xaxis" = c(1:35)/35,
