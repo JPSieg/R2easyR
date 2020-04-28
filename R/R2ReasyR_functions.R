@@ -74,22 +74,22 @@ r2easyR.custom.palette = function(colors){
   for (i in c(2:length(colors))){
     a <- c(a, rep(colors[i], floor(35/length(colors))))
   }
-  pallet <- a
+  palette <- a
 }
 
 #'Generates a list of palettes
 #'
 #'Makes a list of 59 color palettes for r2easyR.colors. Also saves a PDF depicting
 #'all of the color palettes in your current working directory. Color palettes are generated using RColorBrewer
-#'or Viridis. ".l" palettes are recomended for coloring letters because they exclude light shades, which would be
-#'hard to see against a white background. ".c" palettes are recomended for for coloring circles behing letters
+#'or Viridis. ".l" palettes are recommended for coloring letters because they exclude light shades, which would be
+#'hard to see against a white background. ".c" palettes are recommended for coloring circles behind letters
 #'because they exclude dark colors, which obscure the letter inside the circle. Viridis palettes, Viridis, Magma,
-#'Plasma, Inferno, and cividis are not recomended because they result in cluttered secondary structures.
+#'Plasma, Inferno, and cividis are not recommended because they result in cluttered secondary structures.
 #'
 #'@return A list of 59 vectors containing Viridis and Colorbrewer palettes
 #' @export
 r2easyR.palettes = function(){
-  pallets_names <- c("Viridis",
+  palettes_names <- c("Viridis",
                      "Magma",
                      "Plasma",
                      "Inferno",
@@ -148,48 +148,48 @@ r2easyR.palettes = function(){
                      "PRGn",
                      "PiYG",
                      "BrBG")
-  pallets <- {}
-  pallets[[1]] <- viridis::viridis(35, end = 0.9) #Viridis pallets
-  pallets[[2]] <- viridis::magma(35, end = 0.85)
-  pallets[[3]] <- viridis::plasma(35, end = 0.9)
-  pallets[[4]] <- viridis::inferno(35, end = 0.9)
-  pallets[[5]] <- viridis::cividis(35, end = 1)
-  for (i in c(6:23)){ #Pos or neg pallets from color brewer pallets for letters
-    pallets[[i]] <- c(rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[5], 7),
-                      rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[6], 7),
-                      rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[7], 7),
-                      rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[8], 7),
-                      rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[9], 7))
+  palettes <- {}
+  palettes[[1]] <- viridis::viridis(35, end = 0.9) #Viridis palettes
+  palettes[[2]] <- viridis::magma(35, end = 0.85)
+  palettes[[3]] <- viridis::plasma(35, end = 0.9)
+  palettes[[4]] <- viridis::inferno(35, end = 0.9)
+  palettes[[5]] <- viridis::cividis(35, end = 1)
+  for (i in c(6:23)){ #Pos or neg palettes from color brewer palettes for letters
+    palettes[[i]] <- c(rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[5], 7),
+                      rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[6], 7),
+                      rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[7], 7),
+                      rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[8], 7),
+                      rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[9], 7))
   }
-  for (i in c(24:32)){#Neg to pos pallets from color brewer pallets for letters
-    pallets[[i]] <- c(rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[11], 4),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[10], 4),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[9], 4),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[8], 5),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[4], 5),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[3], 5),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[2], 4),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[1], 4))
+  for (i in c(24:32)){#Neg to pos palettes from color brewer palettes for letters
+    palettes[[i]] <- c(rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[11], 4),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[10], 4),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[9], 4),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[8], 5),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[4], 5),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[3], 5),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[2], 4),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[1], 4))
   }
-  for (i in c(33:50)){ #Pos or neg pallets from color brewer pallets for circles
-    pallets[[i]] <- c(rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[2], 5),
-                      rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[3], 6),
-                      rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[4], 6),
-                      rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[5], 6),
-                      rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[6], 6),
-                      rep(RColorBrewer::brewer.pal(9, name = pallets_names[i])[7], 6))
+  for (i in c(33:50)){ #Pos or neg palettes from color brewer palettes for circles
+    palettes[[i]] <- c(rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[2], 5),
+                      rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[3], 6),
+                      rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[4], 6),
+                      rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[5], 6),
+                      rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[6], 6),
+                      rep(RColorBrewer::brewer.pal(9, name = palettes_names[i])[7], 6))
   }
-  for (i in c(51:59)){#Neg to pos pallets from color brewer pallets for circles
-    pallets[[i]] <- c(rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[10], 5),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[9], 4),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[8], 4),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[7], 4),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[6], 4),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[4], 4),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[3], 5),
-                      rep(RColorBrewer::brewer.pal(11, name = pallets_names[i])[2], 5))
+  for (i in c(51:59)){#Neg to pos palettes from color brewer palettes for circles
+    palettes[[i]] <- c(rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[10], 5),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[9], 4),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[8], 4),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[7], 4),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[6], 4),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[4], 4),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[3], 5),
+                      rep(RColorBrewer::brewer.pal(11, name = palettes_names[i])[2], 5))
   }
-  names(pallets) <- c("Viridis",
+  names(palettes) <- c("Viridis",
                       "Magma",
                       "Plasma",
                       "Inferno",
@@ -251,17 +251,17 @@ r2easyR.palettes = function(){
   yvalues <- c(59:1)
   df <- data.frame("xaxis" = c(1:35)/35,
                    "yaxis" = yvalues[1],
-                   "Pallet" = names(pallets)[1],
-                   "Colour" = pallets[[1]])
-  for (i in c(2:length(pallets_names))){
+                   "Palette" = names(palette)[1],
+                   "Colour" = palettes[[1]])
+  for (i in c(2:length(palettes_names))){
     df <- rbind(df, data.frame("xaxis" = c(1:35)/35,
                                "yaxis" = yvalues[i],
-                               "Pallet" = names(pallets)[i],
-                               "Colour" = pallets[[i]]))
+                               "palettes" = names(palettes)[i],
+                               "Colour" = palettes[[i]]))
   }
   graph <- ggplot2::ggplot(data = df, ggplot2::aes(x = xaxis, y = yaxis)) +
     ggplot2::geom_point(show.legend = FALSE, size = 3, shape = 15, colour = df$Colour) +
-    ggplot2::geom_text(data = df[df$xaxis == 1, ], ggplot2::aes(label = Pallet), nudge_x = 0.15, nudge_y = 0.08) +
+    ggplot2::geom_text(data = df[df$xaxis == 1, ], ggplot2::aes(label = palette), nudge_x = 0.15, nudge_y = 0.08) +
     ggplot2::xlab("Scale") +
     ggplot2::ylab("") +
     ggplot2::scale_x_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1), limits = c(0, 1.2)) +
@@ -276,19 +276,19 @@ r2easyR.palettes = function(){
           axis.title.y = ggplot2::element_text(color = "Black", size = 18),
           legend.text = ggplot2::element_text(color = "Black", size = 16),
           legend.title = ggplot2::element_text(color = "Black", size = 16))
-  ggplot2::ggsave(filename = "Pallets.pdf", path = getwd(), plot = graph, scale = 2.5, width = 5, height = 12, units = "cm", dpi = 300)
-  output <- pallets
+  ggplot2::ggsave(filename = "palettes.pdf", path = getwd(), plot = graph, scale = 2.5, width = 5, height = 12, units = "cm", dpi = 300)
+  output <- palettes
 }
 
-#'Assigns labels and colors to reactivity values
+#'Assigns colors to reactivity values
 #'
-#'Assigns a color and a R2R label to each reactivity value in a dataframe. Also, saves a
+#'Assigns a color to each reactivity value in a dataframe. Also, saves a
 #'PDF legend and a PDF depicting the reactivity values in your current working directory.
 #'
 #'@param data_frame A data_frame containing reactivity values in a column labeled "Reactivity"
 #'@param palette A palette contisting of a vector containing 35 R colors. Compatible palettes are easily generated with r2easyR.palettes or r2easyR.custom.palette.
 #'@param abs_reactivity_threshold Minimum threshold for reactivity data to be mapped to a color. Default = 0. Using a higher threshold prevents numerous, but low reactivity values from cluttering up the finished picture.
-#'@param no_data The color you want the nucleotide to have when there is no data. Defaule = "dimgrey"
+#'@param no_data The color you want the nucleotide to have when there is no data. Default = "dimgrey"
 #'@return A data frame containing a R2R label and Color column
 #' @export
 r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivity_threshold = 0){
@@ -301,7 +301,7 @@ r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivit
         if (abs(as.numeric(toString(data_frame$Reactivity[i]))) >= abs_reactivity_threshold){a[i] <- as.numeric(toString(data_frame$Reactivity[i]))}
       }
     }
-    values <- max(a, na.rm = TRUE)*(c(1:length(pallet))/length(pallet))
+    values <- max(a, na.rm = TRUE)*(c(1:length(palette))/length(palette))
     b <- c()
     c <- c()
     for (i in c(1:length(a))){
@@ -312,7 +312,7 @@ r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivit
       else{
         for (j in c(length(values):1)){
           if (a[i] <= values[j]){
-            b[i] <- pallet[j]
+            b[i] <- palette[j]
             c[i] <- "1"
           }
         }
@@ -323,7 +323,7 @@ r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivit
                    "Colour" = b)
   df2 <- data.frame("xaxis" = c(1),
                     "yaxis" = values,
-                    "Colour" = pallet)
+                    "Colour" = palettes)
   levels(df2$Colour) <- c(levels(df2$Colour), c("white"))
   for (i in c(1:length(df2$yaxis))){
     if (df2$yaxis[i] < abs_reactivity_threshold){df2$Colour[i] <- "white"}
@@ -419,7 +419,7 @@ r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivit
       else{
         for (j in c((length(values)):1)){
           if (a[i] <= values[j]){
-            b[i] <- pallet[c(1:35)[j]]
+            b[i] <- palette[c(1:35)[j]]
             c[i] <- "1"
           }
         }
@@ -430,7 +430,7 @@ r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivit
                      "Colour" = b)
     df2 <- data.frame("xaxis" = c(1),
                       "yaxis" = values,
-                      "Colour" = pallet)
+                      "Colour" = palette)
     levels(df2$Colour) <- c(levels(df2$Colour), c("white"))
     for (i in c(1:length(df2$yaxis))){
       if (abs(df2$yaxis[i]) < abs_reactivity_threshold){df2$Colour[i] <- "white"}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/R2ReasyR_functions.R
 \name{r2easyR.color}
 \alias{r2easyR.color}
-\title{Assigns labels and colors to reactivity values}
+\title{Assigns colors to reactivity values}
 \usage{
 r2easyR.color(
   data_frame,
@@ -16,7 +16,7 @@ r2easyR.color(
 
 \item{palette}{A palette contisting of a vector containing 35 R colors. Compatible palettes are easily generated with r2easyR.palettes or r2easyR.custom.palette.}
 
-\item{no_data}{The color you want the nucleotide to have when there is no data. Defaule = "dimgrey"}
+\item{no_data}{The color you want the nucleotide to have when there is no data. Default = "dimgrey"}
 
 \item{abs_reactivity_threshold}{Minimum threshold for reactivity data to be mapped to a color. Default = 0. Using a higher threshold prevents numerous, but low reactivity values from cluttering up the finished picture.}
 }
@@ -24,6 +24,6 @@ r2easyR.color(
 A data frame containing a R2R label and Color column
 }
 \description{
-Assigns a color and a R2R label to each reactivity value in a dataframe. Also, saves a
+Assigns a color to each reactivity value in a dataframe. Also, saves a
 PDF legend and a PDF depicting the reactivity values in your current working directory.
 }

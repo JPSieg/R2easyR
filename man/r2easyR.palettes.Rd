@@ -12,8 +12,8 @@ A list of 59 vectors containing Viridis and Colorbrewer palettes
 \description{
 Makes a list of 59 color palettes for r2easyR.colors. Also saves a PDF depicting
 all of the color palettes in your current working directory. Color palettes are generated using RColorBrewer
-or Viridis. ".l" palettes are recomended for coloring letters because they exclude light shades, which would be
-hard to see against a white background. ".c" palettes are recomended for for coloring circles behing letters
+or Viridis. ".l" palettes are recommended for coloring letters because they exclude light shades, which would be
+hard to see against a white background. ".c" palettes are recommended for coloring circles behind letters
 because they exclude dark colors, which obscure the letter inside the circle. Viridis palettes, Viridis, Magma,
-Plasma, Inferno, and cividis are not recomended because they result in cluttered secondary structures.
+Plasma, Inferno, and cividis are not recommended because they result in cluttered secondary structures.
 }
