@@ -323,7 +323,7 @@ r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivit
                    "Colour" = b)
   df2 <- data.frame("xaxis" = c(1),
                     "yaxis" = values,
-                    "Colour" = palettes)
+                    "Colour" = palette)
   levels(df2$Colour) <- c(levels(df2$Colour), c("white"))
   for (i in c(1:length(df2$yaxis))){
     if (df2$yaxis[i] < abs_reactivity_threshold){df2$Colour[i] <- "white"}
