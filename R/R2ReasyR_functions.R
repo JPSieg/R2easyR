@@ -6,9 +6,36 @@
 #'@return A data frame containing the information in the .ct file
 #' @export
 read.ct = function(data_file){
-  a <- read.delim(data_file, sep = "\t")
-  colnames(a) <- c("N", "Nucleotide", "N-1", "N+1", "BP", "N")
-  output <- a
+  path <- data_file
+  conn <- file(path,open="r")
+  lines <- readLines(conn)
+  close(conn)
+  a <- lines[-1]
+  N <- c()
+  Nucleotide <- c()
+  N.minus.1 <- c()
+  N.plus.1 <- c()
+  BP <- c()
+  N.1 <- c()
+  for (i in 1:length(a)){
+    b <- strsplit(toString(a[i]), " ")
+    b <- b[[1]][-which(b[[1]] == "")]
+    N <- c(N, b[1])
+    Nucleotide <- c(Nucleotide, b[2])
+    N.minus.1 <- c(N.minus.1, b[3])
+    N.plus.1 <- c(N.plus.1, b[4])
+    BP <- c(BP, b[5])
+    N.1 <- c(N.1, b[6])
+  }
+  d <- data.frame("N" = N,
+                  "Nucleotide" = Nucleotide,
+                  "N-1" = N.minus.1,
+                  "N+1" = N.plus.1,
+                  "BP" = BP,
+                  "N" = N.1)
+  colnames(d) <- c("N", "Nucleotide", "N-1", "N+1", "BP", "N")
+  print(head(d))
+  output <- d
 }
 
 #'Converts RNA secondary structure information in a .ct file into dot-bracket notation
@@ -26,8 +53,8 @@ add.dot.bracket = function(ctdata_frame){
      dotbracket[i] <- "."
    }
     else{
-      if (ctdata_frame$BP[i] > ctdata_frame$N[i]){ dotbracket[i] <- "<" }
-      if (ctdata_frame$BP[i] < ctdata_frame$N[i]){ dotbracket[i] <- ">" }
+      if (as.numeric(ctdata_frame$BP[i]) > as.numeric(ctdata_frame$N[i])){ dotbracket[i] <- "<" }
+      if (as.numeric(ctdata_frame$BP[i]) < as.numeric(ctdata_frame$N[i])){ dotbracket[i] <- ">" }
     }
   }
   ctdata_frame$Dotbracket <- dotbracket
@@ -59,6 +86,28 @@ read.react = function(data_file){
       if (toString(reactivity[[i]][j]) != "NA"){reactivity[[i]][j] <- as.numeric(toString(reactivity[[i]][j]))}
     }
   }
+  output <- reactivity
+}
+
+#'Read a .shape file
+#'
+#'This function reads a .react file from StructureFold2 into R
+#'
+#'@param data_file Path to the data file
+#'@return A list of vectors containing reactivity data from the different RNA in the .react file
+#' @export
+read.shape = function(data_file){
+  path <- data_file
+  conn <- file(path,open="r")
+  lines <- readLines(conn)
+  close(conn)
+  reactivity <- c()
+  for (i in 1:length(lines)){
+    a <- lines[i]
+    reactivity <- c(reactivity, as.numeric(strsplit(toString(a), "\t")[[1]][2]))
+  }
+  reactivity[which(reactivity == -999)] <- NA
+  print(reactivity)
   output <- reactivity
 }
 
