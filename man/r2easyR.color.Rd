@@ -8,7 +8,8 @@ r2easyR.color(
   data_frame,
   palette,
   no_data = "dimgrey",
-  abs_reactivity_threshold = 0
+  abs_reactivity_threshold = 0,
+  manual.scale = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ r2easyR.color(
 \item{no_data}{The color you want the nucleotide to have when there is no data. Default = "dimgrey"}
 
 \item{abs_reactivity_threshold}{Minimum threshold for reactivity data to be mapped to a color. Default = 0. Using a higher threshold prevents numerous, but low reactivity values from cluttering up the finished picture.}
+
+\item{manual.scale}{Manually specify a min and max. Useful if you want to color reactivity from multiple transcripts using 1 scale. Default is "FALSE". To set the scale, use manual.scale = c(min, max)}
 }
 \value{
 A data frame containing a R2R label and Color column
