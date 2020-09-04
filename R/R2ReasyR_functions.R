@@ -599,7 +599,10 @@ r2easyR.color = function(data_frame,
 #'@param colors How R2R will draw reactivity colors. No colors = "NA". Colored letters = "letters". Colored circles = "circles".
 #'@return A Stockholm formated file.
 #' @export
-r2easyR = function(output, data_frame,  RNA_name = "default", colors = "NA"){
+r2easyR = function(output,
+                   data_frame,
+                   RNA_name = "default",
+                   colors = "NA"){
   if(colors == "NA"){
     fileConn<-file(paste(output, ".sto", sep = ""))
     writeLines(c("# STOCKHOLM 1.0",
@@ -616,21 +619,36 @@ r2easyR = function(output, data_frame,  RNA_name = "default", colors = "NA"){
   if(colors == "circles"){
     a <- c()
     n <- which(data_frame$Labels != "0")
-    for (i in c(1:length(n))){
-      a[i] <- paste("#=GF R2R circle_nuc #:", n[i]-1, " rgb:", col2rgb(data_frame$Colors[n[i]])[1,1], ",", col2rgb(data_frame$Colors[n[i]])[2,1], ",", col2rgb(data_frame$Colors[n[i]])[3,1], sep ="")
+    if (length(n) != 0){
+      for (i in c(1:length(n))){
+        a[i] <- paste("#=GF R2R circle_nuc #:", n[i]-1, " rgb:", col2rgb(data_frame$Colors[n[i]])[1,1], ",", col2rgb(data_frame$Colors[n[i]])[2,1], ",", col2rgb(data_frame$Colors[n[i]])[3,1], sep ="")
+      }
+      fileConn<-file(paste(output, ".sto", sep = ""))
+      writeLines(c("# STOCKHOLM 1.0",
+                   paste(RNA_name, gsub("T", "U", gsub(" ", "", gsub(",", "", toString(R.utils::capitalize(data_frame$Nucleotide))))), sep = "\t"),
+                   paste("#=GC SS_cons", gsub(", ", "", toString(data_frame$Dotbracket)), sep = "\t"),
+                   paste("#=GC R2R_LABEL", gsub(", ", "", toString(rep(".", length(data_frame$Labels)))), sep = "\t"),
+                   paste("#=GC cons", gsub("T", "U", gsub(" ", "", gsub(",", "", toString(R.utils::capitalize(data_frame$Nucleotide))))), sep = "\t"),
+                   paste("#=GC conss", gsub(", ", "", toString(rep("2", length(data_frame$Nucleotide)))), sep = "\t"),
+                   paste("#=GC cov_SS_cons", gsub(", ", "", toString(rep("3", length(data_frame$Nucleotide)))), sep = "\t"),
+                   gsub(", ", "\n",toString(unique(a))),
+                   "//"),
+                 fileConn)
+      close(fileConn)
     }
-    fileConn<-file(paste(output, ".sto", sep = ""))
-    writeLines(c("# STOCKHOLM 1.0",
-                 paste(RNA_name, gsub("T", "U", gsub(" ", "", gsub(",", "", toString(R.utils::capitalize(data_frame$Nucleotide))))), sep = "\t"),
-                 paste("#=GC SS_cons", gsub(", ", "", toString(data_frame$Dotbracket)), sep = "\t"),
-                 paste("#=GC R2R_LABEL", gsub(", ", "", toString(rep(".", length(data_frame$Labels)))), sep = "\t"),
-                 paste("#=GC cons", gsub("T", "U", gsub(" ", "", gsub(",", "", toString(R.utils::capitalize(data_frame$Nucleotide))))), sep = "\t"),
-                 paste("#=GC conss", gsub(", ", "", toString(rep("2", length(data_frame$Nucleotide)))), sep = "\t"),
-                 paste("#=GC cov_SS_cons", gsub(", ", "", toString(rep("3", length(data_frame$Nucleotide)))), sep = "\t"),
-                 gsub(", ", "\n",toString(unique(a))),
-                 "//"),
-               fileConn)
-    close(fileConn)
+    if (length(n) == 0){
+      fileConn<-file(paste(output, ".sto", sep = ""))
+      writeLines(c("# STOCKHOLM 1.0",
+                   paste(RNA_name, gsub("T", "U", gsub(" ", "", gsub(",", "", toString(R.utils::capitalize(data_frame$Nucleotide))))), sep = "\t"),
+                   paste("#=GC SS_cons", gsub(", ", "", toString(data_frame$Dotbracket)), sep = "\t"),
+                   paste("#=GC R2R_LABEL", gsub(", ", "", toString(rep(".", length(data_frame$Labels)))), sep = "\t"),
+                   paste("#=GC cons", gsub("T", "U", gsub(" ", "", gsub(",", "", toString(R.utils::capitalize(data_frame$Nucleotide))))), sep = "\t"),
+                   paste("#=GC conss", gsub(", ", "", toString(rep("2", length(data_frame$Nucleotide)))), sep = "\t"),
+                   paste("#=GC cov_SS_cons", gsub(", ", "", toString(rep("3", length(data_frame$Nucleotide)))), sep = "\t"),
+                   "//"),
+                 fileConn)
+      close(fileConn)
+    }
   }
   if(colors == "letters"){
     a <- c()
