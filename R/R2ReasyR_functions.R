@@ -374,6 +374,10 @@ r2easyR.color = function(data_frame,
             b[i] <- palette[j]
             c[i] <- "1"
           }
+          if (a[i] > max(values)){
+            b[i] <- palette[35]
+            c[i] <- "1"
+          }
         }
       }
     }
@@ -495,6 +499,10 @@ r2easyR.color = function(data_frame,
         for (j in c((length(values)):1)){
           if (a[i] <= values[j]){
             b[i] <- palette[c(1:35)[j]]
+            c[i] <- "1"
+          }
+          if (a[i] > max(values)){
+            b[i] <- palette[35]
             c[i] <- "1"
           }
         }
