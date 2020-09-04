@@ -338,9 +338,14 @@ r2easyR.palettes = function(){
 #'@param palette A palette contisting of a vector containing 35 R colors. Compatible palettes are easily generated with r2easyR.palettes or r2easyR.custom.palette.
 #'@param abs_reactivity_threshold Minimum threshold for reactivity data to be mapped to a color. Default = 0. Using a higher threshold prevents numerous, but low reactivity values from cluttering up the finished picture.
 #'@param no_data The color you want the nucleotide to have when there is no data. Default = "dimgrey"
+#'@param manual.scale Manually specify a min and max. Useful if you want to color reactivity from multiple transcripts using 1 scale. Default is "FALSE". To set the scale, use manual.scale = c(min, max)
 #'@return A data frame containing a R2R label and Color column
 #' @export
-r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivity_threshold = 0){
+r2easyR.color = function(data_frame,
+                         palette,
+                         no_data = "dimgrey",
+                         abs_reactivity_threshold = 0,
+                         manual.scale = FALSE){
   if (min(data_frame$Reactivity, na.rm = TRUE) >= 0){ #For reactivity data where all values are greater than 0
     a <- c()
     for (i in c(1:length(data_frame$Reactivity))){
@@ -350,7 +355,12 @@ r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivit
         if (abs(as.numeric(toString(data_frame$Reactivity[i]))) >= abs_reactivity_threshold){a[i] <- as.numeric(toString(data_frame$Reactivity[i]))}
       }
     }
-    values <- max(a, na.rm = TRUE)*(c(1:length(palette))/length(palette))
+    if (length(manual.scale) == 1){
+      values <- max(a, na.rm = TRUE)*(c(1:length(palette))/length(palette))
+    }
+    if (length(manual.scale) != 1){
+      values <- manual.scale[2]*(c(1:length(palette))/length(palette))
+    }
     b <- c()
     c <- c()
     for (i in c(1:length(a))){
@@ -446,18 +456,34 @@ r2easyR.color = function(data_frame, palette, no_data = "dimgrey", abs_reactivit
   ggplot2::ggsave(filename = "Rxn_plot.pdf", path = getwd(), plot = rxnplot, scale = 2.5, width = 7, height = 5, units = "cm", dpi = 300)
   }
   if (min(data_frame$Reactivity, na.rm = TRUE) < 0){ #For reactivity data where some values are less than 0
-    a <- c()
-    for (i in c(1:length(data_frame$Reactivity))){
-      if (is.na(data_frame$Reactivity[i])){a[i] <- NA}
-      else{
-        if (abs(as.numeric(toString(data_frame$Reactivity[i]))) < abs_reactivity_threshold){a[i] <- NA}
-        if (abs(as.numeric(toString(data_frame$Reactivity[i]))) >= abs_reactivity_threshold){a[i] <- as.numeric(toString(data_frame$Reactivity[i]))}
+    if (length(manual.scale) == 1){
+      a <- c()
+      for (i in c(1:length(data_frame$Reactivity))){
+        if (is.na(data_frame$Reactivity[i])){a[i] <- NA}
+        else{
+          if (abs(as.numeric(toString(data_frame$Reactivity[i]))) < abs_reactivity_threshold){a[i] <- NA}
+          if (abs(as.numeric(toString(data_frame$Reactivity[i]))) >= abs_reactivity_threshold){a[i] <- as.numeric(toString(data_frame$Reactivity[i]))}
+        }
       }
+      values1 <- -max(abs(a), na.rm = TRUE)*(c(17:1)/17)
+      values2 <- 0
+      values3 <- max(abs(a), na.rm = TRUE)*(c(1:17)/17)
+      values <- c(values1, values2, values3)
     }
-    values1 <- -max(abs(a), na.rm = TRUE)*(c(17:1)/17)
-    values2 <- 0
-    values3 <- max(abs(a), na.rm = TRUE)*(c(1:17)/17)
-    values <- c(values1, values2, values3)
+    if (length(manual.scale) != 1){
+      a <- c()
+      for (i in c(1:length(data_frame$Reactivity))){
+        if (is.na(data_frame$Reactivity[i])){a[i] <- NA}
+        else{
+          if (abs(as.numeric(toString(data_frame$Reactivity[i]))) < abs_reactivity_threshold){a[i] <- NA}
+          if (abs(as.numeric(toString(data_frame$Reactivity[i]))) >= abs_reactivity_threshold){a[i] <- as.numeric(toString(data_frame$Reactivity[i]))}
+        }
+      }
+      values1 <- manual.scale[1]*(c(17:1)/17)
+      values2 <- 0
+      values3 <- manual.scale[2]*(c(1:17)/17)
+      values <- c(values1, values2, values3)
+    }
     b <- c()
     c <- c()
     for (i in c(1:length(a))){
