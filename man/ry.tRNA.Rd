@@ -19,7 +19,7 @@ ry.tRNA(
 }
 \description{
 This function reads a .ct file, reformats it to include dot-bracket secondary structure info,
-adds shape reactivities from a .shape file, maps them to a R2easyR color pallet, and 
+adds shape reactivities from a .shape file, maps them to a R2easyR color pallet, and
 and prints .sto and a R2R meta files, and rewrites the .sto files to include label line
 and place explicit information to get tRNA that are drawn with the traditional layout.
 Run R2R on the master.r2r_meta file to generate all tRNA at once.

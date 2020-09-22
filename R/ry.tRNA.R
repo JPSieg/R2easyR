@@ -1,7 +1,7 @@
 #'Custom R2easyR script that writes R2R inputs based on Ryota's tRNA structure seq data
 #'
 #'This function reads a .ct file, reformats it to include dot-bracket secondary structure info,
-#'adds shape reactivities from a .shape file, maps them to a R2easyR color pallet, and 
+#'adds shape reactivities from a .shape file, maps them to a R2easyR color pallet, and
 #'and prints .sto and a R2R meta files, and rewrites the .sto files to include label line
 #'and place explicit information to get tRNA that are drawn with the traditional layout.
 #'Run R2R on the master.r2r_meta file to generate all tRNA at once.
@@ -14,41 +14,43 @@ ry.tRNA = function(ct_file = "CT files",
                    shape_file = "shape files",
                    output_file = "R2R_files"){
   ####Load in CT files####
-  
+
   df <- lapply(paste(ct_file, list.files(ct_file), sep = "/"), R2easyR::read.ct)
-  
+
   ####Add dot bracket####
-  
+
   df <- lapply(df, R2easyR::add.dot.bracket)
-  
+
   ####Add reactvivity data####
-  
+
   for (i in 1:length(df)){
     df[[i]]$Reactivity <- R2easyR::read.shape(paste(shape_file, list.files(shape_file)[i], sep = "/"))
   }
-  
+
   df
-  
+
   ####Generate color palettes####
-  
+
   palettes <- R2easyR::r2easyR.palettes()
-  
+
   ####Make a vector of file names####
-  
+
   file.names <- list.files(ct_file)
-  
+
   for (i in 1:length(file.names)){
     file.names[i] <- strsplit(toString(file.names[i]), split = "-maxexpect")[[1]][1]
   }
-  
+
+  file.names
+
   ####Map reactivity to a palette and print the file####
-  
+
   for (i in 1:length(df)){
     df[[i]]$Reactivity[which(df[[i]]$Reactivity <= 0)] <- 0
   }
-  
+
   df.color <- {}
-  
+
   for (i in 1:length(df)){
     print(i)
     df.color[[i]] <- R2easyR::r2easyR.color(df[[i]],
@@ -57,9 +59,9 @@ ry.tRNA = function(ct_file = "CT files",
                                             manual.scale = c(0, 5))
     R2easyR::r2easyR(paste(output_file, file.names[i], sep = "/"), df.color[[i]], RNA_name = file.names[i], colors = "circles")
   }
-  
+
   ####Insert drawing information into the R2R stockholm file####
-  
+
   for (i in 1:length(df.color)){
     path <- paste(output_file, "/", file.names[i], ".sto", sep = "")
     conn <- file(path, open = "r")
@@ -114,14 +116,14 @@ ry.tRNA = function(ct_file = "CT files",
                fileConn)
     close(fileConn)
   }
-  
+
   ####Write the master R2R meta file####
-  
+
   lines <- paste(output_file, "/" , file.names, ".sto", "\t", "oneseq", "\t", file.names, sep = "")
-  
+
   fileConn <- file("master.r2r_meta")
   writeLines(lines,
              fileConn)
   close(fileConn)
-  
+
 }
