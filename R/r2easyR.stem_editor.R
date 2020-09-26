@@ -47,8 +47,10 @@ r2easyR.stem_editor = function(R2R.sto){
                 if (i != length(SS_cons)){
                   R2R_LABEL[i] = close_labels[(stems - 1)]
                 }
-                if (SS_cons[(i+1)] == "<"){
-                  next.N.start.stem <- TRUE
+                if (i != length(SS_cons)){
+                  if (SS_cons[(i+1)] == "<"){
+                    next.N.start.stem <- TRUE
+                  }
                 }
                 if (i == length(SS_cons)){
                   ends_in_a_helix <- TRUE
@@ -86,8 +88,10 @@ r2easyR.stem_editor = function(R2R.sto){
             open_pairs = open_pairs - 1
             R2R_LABEL[i] = "."
             if (open_pairs == 0){
-              if (SS_cons[(i+1)] == "<"){
-                next.N.start.stem <- TRUE
+              if (i != length(SS_cons)){
+                if (SS_cons[(i+1)] == "<"){
+                  next.N.start.stem <- TRUE
+                }
               }
             }
           }
@@ -120,11 +124,11 @@ r2easyR.stem_editor = function(R2R.sto){
       }
     }
 
-    print(paste("i =", i))
-    print(paste("open pairs", open_pairs))
-    print(paste("stems", stems))
-    print(next.N.start.stem)
-    print(R2R_LABEL)
+    #print(paste("i =", i))
+    #print(paste("open pairs", open_pairs))
+    #print(paste("stems", stems))
+    #print(next.N.start.stem)
+    #print(R2R_LABEL)
   }
 
   lines[4] <- paste("#=GC R2R_LABEL", gsub(", ", "", toString(R2R_LABEL)), sep = "\t")
