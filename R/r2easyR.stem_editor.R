@@ -20,6 +20,7 @@ r2easyR.stem_editor = function(R2R.sto){
   R2R_LABEL <- 0
   ends_in_a_helix <- FALSE
   next.N.start.stem <- FALSE
+  zoro_n_juction <- c()
 
   open_labels <- c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M")
   close_labels <- c("N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
@@ -50,6 +51,9 @@ r2easyR.stem_editor = function(R2R.sto){
                 if (i != length(SS_cons)){
                   if (SS_cons[(i+1)] == "<"){
                     next.N.start.stem <- TRUE
+                    zoro_n_juction[stems] <- TRUE
+                  }else{
+                    zoro_n_juction[stems] <- FALSE
                   }
                 }
                 if (i == length(SS_cons)){
@@ -91,6 +95,9 @@ r2easyR.stem_editor = function(R2R.sto){
               if (i != length(SS_cons)){
                 if (SS_cons[(i+1)] == "<"){
                   next.N.start.stem <- TRUE
+                  zoro_n_juction[stems] <- TRUE
+                }else{
+                  zoro_n_juction[stems] <- FALSE
                 }
               }
             }
@@ -129,32 +136,59 @@ r2easyR.stem_editor = function(R2R.sto){
     #print(paste("stems", stems))
     #print(next.N.start.stem)
     #print(R2R_LABEL)
+
   }
 
   lines[4] <- paste("#=GC R2R_LABEL", gsub(", ", "", toString(R2R_LABEL)), sep = "\t")
 
-  if (ends_in_a_helix == FALSE){
-    for ( i in 1:stems){
-      if (i %% 2 == 0){
+  if (SS_cons[length(SS_cons)] == ">"){ends_in_a_helix == TRUE}else{ends_in_a_helix == FALSE}
+
+  if (length(zoro_n_juction) <= 1){zoro_n_juction <- c(zoro_n_juction, c(FALSE, FALSE, FALSE, FALSE))}
+
+  if (length(SS_cons) != length(SS_cons[which(SS_cons == ".")])){
+    if (ends_in_a_helix == FALSE){
+      for ( i in 1:stems){
+        if (i %% 2 == 0){
+          if (zoro_n_juction[i-1]){
+            lines <- c(lines[1:(length(lines)-1)],
+                       paste("#=GF R2R place_explicit ", open_labels[(i - 1)], " ", open_labels[(i - 1)], "-- -45 1 0 0 0 0 f", sep = ""),
+                       paste("#=GF R2R place_explicit ", close_labels[(i - 1)], "++ ", close_labels[(i - 1)], " 45 1 0 0 0 90 f", sep = ""),
+                       "//")
+          }else{
+            lines <- c(lines[1:(length(lines)-1)],
+                       paste("#=GF R2R place_explicit ", open_labels[(i - 1)], " ", open_labels[(i - 1)], "-- 45 1 0 0 0 90 f", sep = ""),
+                       paste("#=GF R2R place_explicit ", close_labels[(i - 1)], "++ ", close_labels[(i - 1)], " 45 1 0 0 0 90 f", sep = ""),
+                       "//")
+          }
+        }
+      }
+    }
+    if (ends_in_a_helix == TRUE){
+      for ( i in 1:(stems - 1)){
+        if (i %% 2 == 0){
+          if (zoro_n_juction[i-1]){
+            lines <- c(lines[1:(length(lines)-1)],
+                       paste("#=GF R2R place_explicit ", open_labels[(i - 1)], " ", open_labels[(i - 1)], "-- -45 1 0 0 0 0 f", sep = ""),
+                       paste("#=GF R2R place_explicit ", close_labels[(i - 1)], "++ ", close_labels[(i - 1)], " 45 1 0 0 0 90 f", sep = ""),
+                       "//")
+          }else{
+            lines <- c(lines[1:(length(lines)-1)],
+                       paste("#=GF R2R place_explicit ", open_labels[(i - 1)], " ", open_labels[(i - 1)], "-- 45 1 0 0 0 90 f", sep = ""),
+                       paste("#=GF R2R place_explicit ", close_labels[(i - 1)], "++ ", close_labels[(i - 1)], " 45 1 0 0 0 90 f", sep = ""),
+                       "//")
+          }
+        }
+      }
+      if (zoro_n_juction[(stems-1)]){
         lines <- c(lines[1:(length(lines)-1)],
-                   paste("#=GF R2R place_explicit ", open_labels[(i - 1)], " ", open_labels[(i - 1)], "-- 45 1 0 0 0 90 f", sep = ""),
-                   paste("#=GF R2R place_explicit ", close_labels[(i - 1)], "++ ", close_labels[(i - 1)], " 45 1 0 0 0 90 f", sep = ""),
+                   paste("#=GF R2R place_explicit ", open_labels[(stems - 1)], " ", open_labels[(stems - 1)], "-- -45 1 0 0 0 0 f", sep = ""),
+                   "//")
+      }else{
+        lines <- c(lines[1:(length(lines)-1)],
+                   paste("#=GF R2R place_explicit ", open_labels[(stems - 1)], " ", open_labels[(stems - 1)], "-- 45 1 0 0 0 90 f", sep = ""),
                    "//")
       }
     }
-  }
-  if (ends_in_a_helix == TRUE){
-    for ( i in 1:(stems - 1)){
-      if (i %% 2 == 0){
-        lines <- c(lines[1:(length(lines)-1)],
-                   paste("#=GF R2R place_explicit ", open_labels[(i - 1)], " ", open_labels[(i - 1)], "-- 45 1 0 0 0 90 f", sep = ""),
-                   paste("#=GF R2R place_explicit ", close_labels[(i - 1)], "++ ", close_labels[(i - 1)], " 45 1 0 0 0 90 f", sep = ""),
-                   "//")
-      }
-    }
-    lines <- c(lines[1:(length(lines)-1)],
-               paste("#=GF R2R place_explicit ", open_labels[(stems - 1)], " ", open_labels[(stems - 1)], "-- 45 1 0 0 0 90 f", sep = ""),
-               "//")
   }
 
   print(lines)
