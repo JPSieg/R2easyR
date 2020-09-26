@@ -599,7 +599,7 @@ r2easyR.color = function(data_frame,
 #'@param colors How R2R will draw reactivity colors. No colors = "NA". Colored letters = "letters". Colored circles = "circles".
 #'@return A Stockholm formated file.
 #' @export
-r2easyR = function(output,
+r2easyR.write = function(output,
                    data_frame,
                    RNA_name = "default",
                    colors = "NA"){
@@ -632,6 +632,7 @@ r2easyR = function(output,
                    paste("#=GC conss", gsub(", ", "", toString(rep("2", length(data_frame$Nucleotide)))), sep = "\t"),
                    paste("#=GC cov_SS_cons", gsub(", ", "", toString(rep("3", length(data_frame$Nucleotide)))), sep = "\t"),
                    gsub(", ", "\n",toString(unique(a))),
+                   "#=GF R2R SetDrawingParam nucShrinkWithCircleNuc 1 pairBondScaleWithCircleNuc 1",
                    "//"),
                  fileConn)
       close(fileConn)
@@ -645,6 +646,7 @@ r2easyR = function(output,
                    paste("#=GC cons", gsub("T", "U", gsub(" ", "", gsub(",", "", toString(R.utils::capitalize(data_frame$Nucleotide))))), sep = "\t"),
                    paste("#=GC conss", gsub(", ", "", toString(rep("2", length(data_frame$Nucleotide)))), sep = "\t"),
                    paste("#=GC cov_SS_cons", gsub(", ", "", toString(rep("3", length(data_frame$Nucleotide)))), sep = "\t"),
+                   "#=GF R2R SetDrawingParam nucShrinkWithCircleNuc 1 pairBondScaleWithCircleNuc 1",
                    "//"),
                  fileConn)
       close(fileConn)
