@@ -9,7 +9,8 @@ r2easyR.color(
   palette,
   no_data = "dimgrey",
   abs_reactivity_threshold = 0,
-  manual.scale = FALSE
+  manual.scale = FALSE,
+  write_legend = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ r2easyR.color(
 \item{abs_reactivity_threshold}{Minimum threshold for reactivity data to be mapped to a color. Default = 0. Using a higher threshold prevents numerous, but low reactivity values from cluttering up the finished picture.}
 
 \item{manual.scale}{Manually specify a min and max. Useful if you want to color reactivity from multiple transcripts using 1 scale. Default is "FALSE". To set the scale, use manual.scale = c(min, max)}
+
+\item{write_legend}{Option to not write the legend or the Rxn plot. Default TRUE. If set to FALSE it will skip time consuming graphics writing steps. Good for running in bulk.}
 }
 \value{
 A data frame containing a R2R label and Color column

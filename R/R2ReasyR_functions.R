@@ -339,13 +339,15 @@ r2easyR.palettes = function(){
 #'@param abs_reactivity_threshold Minimum threshold for reactivity data to be mapped to a color. Default = 0. Using a higher threshold prevents numerous, but low reactivity values from cluttering up the finished picture.
 #'@param no_data The color you want the nucleotide to have when there is no data. Default = "dimgrey"
 #'@param manual.scale Manually specify a min and max. Useful if you want to color reactivity from multiple transcripts using 1 scale. Default is "FALSE". To set the scale, use manual.scale = c(min, max)
+#'@param write_legend Option to not write the legend or the Rxn plot. Default TRUE. If set to FALSE it will skip time consuming graphics writing steps. Good for running in bulk.
 #'@return A data frame containing a R2R label and Color column
 #' @export
 r2easyR.color = function(data_frame,
                          palette,
                          no_data = "dimgrey",
                          abs_reactivity_threshold = 0,
-                         manual.scale = FALSE){
+                         manual.scale = FALSE,
+                         write_legend = TRUE){
   if (min(data_frame$Reactivity, na.rm = TRUE) >= 0){ #For reactivity data where all values are greater than 0
     a <- c()
     for (i in c(1:length(data_frame$Reactivity))){
@@ -443,7 +445,9 @@ r2easyR.color = function(data_frame,
                    axis.title.y = ggplot2::element_text(color = "Black", size = 18),
                    legend.text = ggplot2::element_text(color = "Black", size = 16),
                    legend.title = ggplot2::element_text(color = "Black", size = 16))
-  ggplot2::ggsave(filename = "Legend.pdf", path = getwd(), plot = legend, scale = 2.5, width = 2.85, height = 5, units = "cm", dpi = 300)
+  if (write_legend){
+    ggplot2::ggsave(filename = "Legend.pdf", path = getwd(), plot = legend, scale = 2.5, width = 2.85, height = 5, units = "cm", dpi = 300)
+  }
   rxnplot <- ggplot2::ggplot(data = df, ggplot2::aes(x = xaxis, y = yaxis)) +
     ggplot2::geom_point(show.legend = FALSE, size =2, colour = df$Colour) +
     ggplot2::xlab("Residue") +
@@ -457,7 +461,9 @@ r2easyR.color = function(data_frame,
                    axis.title.y = ggplot2::element_text(color = "Black", size = 18),
                    legend.text = ggplot2::element_text(color = "Black", size = 16),
                    legend.title = ggplot2::element_text(color = "Black", size = 16))
-  ggplot2::ggsave(filename = "Rxn_plot.pdf", path = getwd(), plot = rxnplot, scale = 2.5, width = 7, height = 5, units = "cm", dpi = 300)
+  if (write_legend){
+    ggplot2::ggsave(filename = "Rxn_plot.pdf", path = getwd(), plot = rxnplot, scale = 2.5, width = 7, height = 5, units = "cm", dpi = 300)
+  }
   }
   if (min(data_frame$Reactivity, na.rm = TRUE) < 0){ #For reactivity data where some values are less than 0
     if (length(manual.scale) == 1){
@@ -570,7 +576,9 @@ r2easyR.color = function(data_frame,
                      axis.title.y = ggplot2::element_text(color = "Black", size = 18),
                      legend.text = ggplot2::element_text(color = "Black", size = 16),
                      legend.title = ggplot2::element_text(color = "Black", size = 16))
-    ggplot2::ggsave(filename = "Legend.pdf", path = getwd(), plot = legend, scale = 2.5, width = 2.85, height = 5, units = "cm", dpi = 300)
+    if (write_legend){
+      ggplot2::ggsave(filename = "Legend.pdf", path = getwd(), plot = legend, scale = 2.5, width = 2.85, height = 5, units = "cm", dpi = 300)
+    }
     rxnplot <- ggplot2::ggplot(data = df, ggplot2::aes(x = xaxis, y = yaxis)) +
       ggplot2::geom_point(show.legend = FALSE, size =2, colour = df$Colour) +
       ggplot2::xlab("Residue") +
@@ -584,7 +592,9 @@ r2easyR.color = function(data_frame,
                      axis.title.y = ggplot2::element_text(color = "Black", size = 18),
                      legend.text = ggplot2::element_text(color = "Black", size = 16),
                      legend.title = ggplot2::element_text(color = "Black", size = 16))
-    ggplot2::ggsave(filename = "Rxn_plot.pdf", path = getwd(), plot = rxnplot, scale = 2.5, width = 7, height = 5, units = "cm", dpi = 300)
+    if (write_legend){
+      ggplot2::ggsave(filename = "Rxn_plot.pdf", path = getwd(), plot = rxnplot, scale = 2.5, width = 7, height = 5, units = "cm", dpi = 300)
+    }
   }
   data_frame$Labels <- c
   data_frame$Colors <- b
