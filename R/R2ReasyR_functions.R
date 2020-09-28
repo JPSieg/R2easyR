@@ -622,6 +622,7 @@ r2easyR.write = function(output,
                  paste("#=GC cons", gsub("T", "U", gsub(" ", "", gsub(",", "", toString(R.utils::capitalize(data_frame$Nucleotide))))), sep = "\t"),
                  paste("#=GC conss", gsub(", ", "", toString(rep("2", length(data_frame$Nucleotide)))), sep = "\t"),
                  paste("#=GC cov_SS_cons", gsub(", ", "", toString(rep("3", length(data_frame$Nucleotide)))), sep = "\t"),
+                 paste("#=GF R2R tick_label_regular_numbering ", data_frame$N[1], " 10 firstNucNum ", data_frame$N[1], sep = ""),
                  "//"),
                fileConn)
     close(fileConn)
