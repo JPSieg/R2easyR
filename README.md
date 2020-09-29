@@ -22,3 +22,5 @@
 ### 2.) Using R2easyR to map reactivity data to a simple RNA 2-structure using a CT file from RNAstructure 
 
 ### 2.) Using R2easyR to map reactivity data to RNA 2-structures in bulk using CT files from RNAstructure
+
+## Citations
