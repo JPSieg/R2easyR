@@ -57,7 +57,7 @@ ry.tRNA = function(ct_file = "CT files",
                                             palette = palettes$YlOrRd.c,
                                             abs_reactivity_threshold = 0.2,
                                             manual.scale = c(0, 5))
-    R2easyR::r2easyR(paste(output_file, file.names[i], sep = "/"), df.color[[i]], RNA_name = file.names[i], colors = "circles")
+    R2easyR::r2easyR.write(paste(output_file, file.names[i], sep = "/"), df.color[[i]], RNA_name = file.names[i], colors = "circles")
   }
 
   ####Insert drawing information into the R2R stockholm file####
