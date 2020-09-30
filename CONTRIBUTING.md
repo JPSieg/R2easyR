@@ -1,0 +1,1 @@
+### R2easyR is an experimental R package designed to facilitate drawing experimental reactivity data on RNA 2-structures. Questions concerning issues and potential contributions should be directed to jus841@psu.edu  
