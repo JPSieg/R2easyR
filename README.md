@@ -18,7 +18,7 @@
 
 ![Figure_1](https://user-images.githubusercontent.com/63312483/96525110-1d182900-1248-11eb-8b60-af187eb1fdb6.png)
 
-### The four core R2easyR functions can be used in a R script to generate generate a single RNA secondary structure in a couple minutes starting with a .csv file (Video turotial 1) or a .ct file (Video tutorial 2) in a couple of minutes. Alternatively, if you are good at R scripting, one can run the four core R2easyR on a loop to print RNA secondary structures depictions in bulk. Two such bulk structure printers are built into R2easyR. The first is called "ry.tRNA" and maps reactivity data to near-"cloverleaf" tRNA structures in bulk starting with .ct and .shape formated secondary structure and reactivity data. The second, called "r2easyR.go_fast" maps reactivity data to any RNA secondary structure in bulk starting with .ct and .shape formated secondary structure and reactivity data.
+### The four core R2easyR functions can be used in a R script to generate generate a single RNA secondary structure in a couple minutes starting with a .csv file (Video turotial 1) or a .ct file (Video tutorial 2) in a couple of minutes. Alternatively, if you are good at R scripting, one can run the four core R2easyR on a loop to print RNA secondary structures depictions in bulk. Two such bulk structure printers are built into R2easyR. The first is called "ry.tRNA" and maps reactivity data to near-"cloverleaf" tRNA structures in bulk starting with .ct and .shape formated secondary structure and reactivity data. The second, called "r2easyR.go_fast" maps reactivity data to any RNA secondary structure in bulk starting with .ct and .shape formated secondary structure and reactivity data (Video tutorial 3).
 
 ## Installation
 
@@ -37,6 +37,6 @@ https://youtu.be/tLZDegQ6b20
 
 https://youtu.be/2wCFcz3NEiw
 
-### 2.) Using R2easyR to map reactivity data to RNA 2-structures in bulk using CT files from RNAstructure
+### 3.) Using R2easyR to map reactivity data to RNA 2-structures in bulk using CT files from RNAstructure
 
 https://youtu.be/SO_8z9tvXK4
