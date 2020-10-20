@@ -16,7 +16,9 @@
 
 ### The core of the R2easyR is four functions: “r2easyR.pallets”, “r2easyR.color”, “r2easyR.write”, and "r2easyR.stem_editor". “r2easy.palettes” is a palette generation function that makes 59 palettes that can be used to color reactivity data on RNA secondary structures. “r2easyR.color” is an assignment function that assigns colors to nucleotides based on the reactivity at that nucleotide. If the nucleotide reactivity is higher, the color “r2easyR.color” assigns will be more intense. “r2easyR.write” is a file writing function that writes two files (a Stockholm file and a R2R meta file) that tell R2R how to color each nucleotide on a secondary structure. "r2easyR.stem_editor" is a R2R Stockholm file editor, that supplies instructions to a stockholm file that optimizes the layout of stems in a multistem structure so that stems are less likely to clash.
 
+
 ![Figure_1](https://user-images.githubusercontent.com/63312483/96525110-1d182900-1248-11eb-8b60-af187eb1fdb6.png)
+
 
 ### The four core R2easyR functions can be used in a R script to generate generate a single RNA secondary structure in a couple minutes starting with a .csv file (Video turotial 1) or a .ct file (Video tutorial 2) in a couple of minutes. Alternatively, if you are good at R scripting, one can run the four core R2easyR on a loop to print RNA secondary structures depictions in bulk. Two such bulk structure printers are built into R2easyR. The first is called "ry.tRNA" and maps reactivity data to near-"cloverleaf" tRNA structures in bulk starting with .ct and .shape formated secondary structure and reactivity data. The second, called "r2easyR.go_fast" maps reactivity data to any RNA secondary structure in bulk starting with .ct and .shape formated secondary structure and reactivity data (Video tutorial 3).
 
