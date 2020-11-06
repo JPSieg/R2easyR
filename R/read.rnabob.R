@@ -7,7 +7,7 @@
 #' @export
 read.rnabob = function(data_file){
   con = file(data_file, "r")
-  
+
   database <- c()
   descriptor <- c()
   seq.f <- c()
@@ -16,7 +16,7 @@ read.rnabob = function(data_file){
   species <- c()
   sequence <- c()
   n <- 1
-  
+
   while ( TRUE ) {
     line = readLines(con, n = 1)
     if ( length(line) != 0 ) {
@@ -28,17 +28,21 @@ read.rnabob = function(data_file){
         while ( TRUE ){
           a <- readLines(con, n = 1)
           if (length(strsplit(a, split = " ")[[1]]) > 4){
-            print(a)
-            print(length(strsplit(a, split = " ")[[1]]))
-            seq.f <- c(seq.f, strsplit(a, split = " ")[[1]][2])
-            seq.t <- c(seq.t, strsplit(a, split = " ")[[1]][4])
-            accen.number <- c(accen.number, strsplit(a, split = " ")[[1]][5])
-            species <- c(species, gsub(",", "", toString(strsplit(a, split = " ")[[1]][6:length(strsplit(a, split = " ")[[1]])])))
+            if (length(which(strsplit(a, split = " ")[[1]] == "")) != 0){
+              b <- strsplit(a, split = " ")[[1]][-which(strsplit(a, split = " ")[[1]] == "")]
+            }
+            if (length(which(strsplit(a, split = " ")[[1]] == "")) == 0){
+              b <- strsplit(a, split = " ")[[1]]
+            }
+            seq.f <- c(seq.f, b[1])
+            seq.t <- c(seq.t, b[2])
+            accen.number <- c(accen.number, b[3])
+            species <- c(species, toString(b[c(4:5)]))
           }
           if (length(strsplit(a, split = " ")[[1]]) == 1){
-            b <- strsplit(a, "")[[1]]
-            b <- b[-which(b == "|")]
-            sequence <- c(sequence, gsub(", ", "", toString(b)))
+            c <- strsplit(a, "")[[1]]
+            c <- c[-which(c == "|")]
+            sequence <- c(sequence, gsub(", ", "", toString(c)))
           }
           if ( a == "" ) {
             break
@@ -50,9 +54,9 @@ read.rnabob = function(data_file){
       break
     }
   }
-  
+
   close(con)
-  
+
   if (length(sequence) > 0){
     output <- data.frame(database,
                          descriptor,
