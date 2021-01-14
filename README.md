@@ -22,7 +22,7 @@
 
 ### The four core R2easyR functions can be used in a R script to generate generate a single RNA secondary structure in a couple minutes starting with a .csv file (Video turotial 1) or a .ct file (Video tutorial 2). Alternatively, if you are good at R scripting, one can run the four core R2easyR on a loop to print RNA secondary structures depictions in bulk. Two such bulk structure printers are built into R2easyR. The first is called "ry.tRNA" and maps reactivity data to near-"cloverleaf" tRNA structures in bulk starting with .ct and .shape formated secondary structure/reactivity data. The second, called "r2easyR.go_fast" maps reactivity data to any RNA secondary structure in bulk starting with .ct and .shape formated secondary structure/reactivity data (Video tutorial 3).
 
-##Video tutorials
+## Video tutorials
 
 ### 1.) Using R2easyR to map reactivity data to a simple RNA 2-structure using a .csv
 
@@ -36,61 +36,63 @@ https://youtu.be/2wCFcz3NEiw
 
 https://youtu.be/SO_8z9tvXK4
 
+# Manual
+
 ## Installation
 
 ### Prior to installing R2easyR, please install R. If you are not used to R or other command- line programs, I strongly recommend downloading and working in RStudio. To install R2easyR on your R console, open your R terminal or RStudio and type:
 
 ```{r}
-install.packages(“devtools”)
+>install.packages(“devtools”)
 ```
 
 ### This will take a minute. Install any dependent packages. “devtools” is a fantastic R package for developing, distributing, and downloading R packages. I cannot guarantee that your R2easyR installation will work without “devtools”. After “devtools” is installed, type/enter:
 
 ```{r}
-devtools::install_github(“JPSieg/R2easyR”)
+>devtools::install_github(“JPSieg/R2easyR”)
 ```
 
 ### R2easyR should be installed in a few minutes. The command prompt may ask you to update dependent packages. I recommend skipping the update by entering an empty line. If you are using a fairly recent version of R, not much has changed and the updates can take a while. To check the installation when it finishes, type/enter.
 
 ```{r}
-library(R2easyR)
-?r2easyR.color
+>library(R2easyR)
+>?r2easyR.color
 ```
 
 ### The help files for the function “r2easyR.color” will pop up if R2easyR was installed correctly. Note the “library” function does not require quotation marks around the package. “library” loads the R2easyR package from your R library into your R memory. Thus, you will need to use “library” again after you close and restart R. You can also call R2easyR functions explicitly using the following syntax, with no need to use “library”.
 
 ```{r}
-<package>::<function>
+>package>::function
 ```
 
 ### For example:
 
 ```{r}
-?R2easyR::r2easyR.color
+>?R2easyR::r2easyR.color
 ```
 
 ### R2easyR relies on 4 common packages that do not come with base R: “ggplot2”, “viridis”, “RColorBrewer”, and “R.utils”. If you are a R user, you have probably already installed them. If not, or you are not sure, please install or reinstall using:
 
 ```{r}
-install.packages("package")
+>install.packages("package")
 ```
 
 ### For example:
 
 ```{r}
-install.packages(“ggplot2”)
+>install.packages(“ggplot2”)
 ```
 
 ### Reinstalling R2easyR on top of an existing R2easyR installation can corrupt the help files. Thus, if you need to reinstall R2easyR, please remove the current installation and then reinstall R2easyR. First, restart R so you are not removing a package that is currently loaded in the memory:
 
 ```{r}
-q()
+>q()
 ```
 
 ### Then restart R and run:
 
 ```{r}
-devtools::install_github("JPSieg/R2easyR")
+>devtools::install_github("JPSieg/R2easyR")
 ```
 
 ## Loading data into R and Formatting it for R2easyR
@@ -108,13 +110,13 @@ devtools::install_github("JPSieg/R2easyR")
 ### Now your “.csv” file can be read into a data frame (df) using “read.csv”:
 
 ```{r}
-df <- read.csv("file_name.csv")
+>df <- read.csv("file_name.csv")
 ```
 
 ### You can check your data frame (df) using the "head" function or the "View" function.
 
 ```{r}
-head(df)
+>head(df)
 
   N Nucleotide Dotbracket Reactivity
 1 1          G          .         NA
@@ -124,6 +126,122 @@ head(df)
 5 5          T          <         NA
 6 6          A          <        0.1
 
-View(df)
+>View(df)
 ```
+
+## Loading a connectivity table (“.ct”) file into R and converting the ".ct" format to “dot-bracket” format in R
+
+### Specifying a secondary structure with the Dotbracket notation can be prohibitively tricky for long RNA. RNA secondary structure prediction algorithms like RNAStructure (https://rna.urmc.rochester.edu/RNAstructure.html) uses the “.ct” format to specify a RNA secondary structure. R2easyR contains a function called “read.ct” to read a “.ct” file into a R data frame and a function called "add.dot.bracket" to convert the ".ct" format to the "dot-bracket" format. The syntax for “read.ct” is the same as “read.csv”:
+
+```{r}
+>df <- read.ct("file_name.ct")
+>head(df)
+    N Nucleotide N-1 N+1 BP   N
+1 800          G 799 801  0 800
+2 801          C 800 802  0 801
+3 802          A 801 803  0 802
+4 803          U 802 804  0 803
+5 804          C 803 805  0 804
+6 805          U 804 806  0 805
+```
+
+### Now simply apply "add.dot.bracket" to add a "Dotbraket" column to the data frame (df)
+
+```{r}
+>df <- add.dot.bracket(df)
+>head(df)
+    N Nucleotide N-1 N+1 BP   N Dotbracket
+1 800          G 799 801  0 800          .
+2 801          C 800 802  0 801          .
+3 802          A 801 803  0 802          .
+4 803          U 802 804  0 803          .
+5 804          C 803 805  0 804          .
+6 805          U 804 806  0 805          .
+```
+
+## Loading in reactivity data from “.react” and ".shape" files and placing reactivity data into a data frame
+
+### StructureFold2 (https://github.com/StructureFold2/StructureFold2) formats reactivity data in “.react” files. R2easyR contains a function called “read.react” that reads reactivity data into a R list that is named by the RNA. Likwise, ShapeMapper (https://weekslab.com/software/) formats reactivity data in “.shape” files. R2easyR contains a function called “read.shape” that reads reactivity data into R. Reactivity data is easily placed into a data frame after it is read into R using "read.react" or "read.shape".
+
+### TO read in data, simply type:
+
+```{r}
+>Reactivity <- read.shape("file_name.ct")
+>shape
+ [1]         NA 0.14494805 0.75081005         NA 1.70183611         NA         NA 0.07716659         NA         NA         NA
+[12] 0.37853340         NA 0.78105101         NA         NA 0.15641876         NA 0.01042792         NA         NA 0.00000000
+[23]         NA 0.64235971         NA         NA 0.00000000         NA         NA 0.16267551         NA 0.76540913 1.36501438
+[34] 0.51826749 1.28576221 0.50888237         NA 0.50888237         NA         NA         NA 0.32117985         NA 0.00000000
+[45] 1.01880752         NA         NA 1.06781873         NA 1.01880752         NA
+```
+
+### Now add a new column to your data frame (df):
+
+```{r}
+>df$Reactivity <- Reactivity
+>head(df)
+    N Nucleotide N-1 N+1 BP   N Dotbracket Reactivity
+1 800          G 799 801  0 800          .         NA
+2 801          C 800 802  0 801          .  0.1449481
+3 802          A 801 803  0 802          .  0.7508100
+4 803          U 802 804  0 803          .         NA
+5 804          C 803 805  0 804          .  1.7018361
+6 805          U 804 806  0 805          .         NA
+```
+
+## Generating Color Palettes with R2easyR
+
+## Generating color palettes that are built into R2easyR
+
+### R2easyR uses pallets consisting of vectors containing 35 R colors, arranged from coolest/least-intense to warmest/most-intense. R2easyR contains a function called “r2easyR.palettes” that generates a curated list of 59 palettes using RColorBrewer (https://cran.r-project.org/web/packages/RColorBrewer/index.html) and Viridis palettes (https://mran.revolutionanalytics.com/web/packages/viridis/vignettes/intro-to-viridis.html). These palettes can be fed into the function "r2easyR.color" to color nucleotides. The following code will generate that list in an object called “palettes”:
+
+```{r}
+>palettes <- r2easyR.palettes()
+```
+
+### We can call an individual pallet from that list using the $ syntax:
+
+```{r}
+>palettes$Reds.c
+"#FEE0D2" "#FEE0D2" "#FEE0D2" "#FEE0D2" "#FEE0D2" "#FCBBA1" "#FCBBA1" "#FCBBA1" "#FCBBA1" "#FCBBA1" "#FCBBA1" "#FC9272"
+[13] "#FC9272" "#FC9272" "#FC9272" "#FC9272" "#FC9272" "#FB6A4A" "#FB6A4A" "#FB6A4A" "#FB6A4A" "#FB6A4A" "#FB6A4A" "#EF3B2C"
+[25] "#EF3B2C" "#EF3B2C" "#EF3B2C" "#EF3B2C" "#EF3B2C" "#CB181D" "#CB181D" "#CB181D" "#CB181D" "#CB181D" "#CB181D"
+```
+
+### A PDF depiction of all 59 palettes made by “r2easyR.pallets” is written in your working directory when you run “r2easyR.pallettes”, to help you choose a palette that works for your application. ".c" palettes like "Reds.C" are recomended for coloring reactivity data as circles behind nucleotides because they avoid very dark shades that would obscure the nucleotide letter. ".l" palettes are recomended for coloring reactivity data as the color of the nucleotide letter because they avoid light shades that would be hard to see against a white background.
+
+![Legend](https://user-images.githubusercontent.com/63312483/104636874-0419eb00-5672-11eb-8c24-85ac1107d12c.png)
+
+## Creating a custom color palette
+
+### R2easyR contains a function called “r2easyR.custom.palette” for creating your own palette. “r2easyR.custom.palette” converts a vector containing 35 or less R colors to a format that “r2easyR.color” can use. To make a vector(“a”) containing R colors we use the “c()” syntax. First we have to make a vector containing the colors we want.
+
+```{r}
+>a <- c("green", "yellow", "Red")
+>a
+[1] "green"  "yellow" "Red"   
+```
+
+### Now we can use “r2easyR.custom.palettes” to make a R2easyR palette out of “a”:
+
+```{r}
+> test.pal <- r2easyR.custom.palette(a)
+ [1] "green"  "green"  "green"  "green"  "green"  "green"  "green"  "green"  "green"  "green"  "green"  "green"  "green" 
+[14] "yellow" "yellow" "yellow" "yellow" "yellow" "yellow" "yellow" "yellow" "yellow" "yellow" "yellow" "Red"    "Red"   
+[27] "Red"    "Red"    "Red"    "Red"    "Red"    "Red"    "Red"    "Red"    "Red" 
+```
+
+### “testpall” is now an R object that can be fed into “r2easyR.color” to assign colors to reactivity data.
+
+
+## 4 Mapping Reactivity Data to Color Pallets with R2easyR
+
+## 4.1 Choosing a color pallet
+
+### “r2easyR.pallettes” writes a PDF depiction of all 59 palettes to help the user choose a palette. You can reference this PDF, or Figure 3 when you are choosing a palette. I find the following rules get aesthetically pleasing results:
+
+###    1. ".l" palettes are recommended for coloring letters because they exclude light shades, which would be hard to see against a white background.
+###    2. ".c" palettes are recommended for coloring circles behind letters because they exclude dark colors, which obscure the letter inside the circle.
+###    3. Palettes that transition from one color two another are good for mapping change in reactivity data.
+###    4. Viridis palettes, Viridis, Magma, Plasma, Inferno, and cividis are not recommended because they result in cluttered secondary structures. Viridis makes great palettes, but they don’t look good on RNA secondary structures.
 
