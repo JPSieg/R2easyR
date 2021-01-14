@@ -245,3 +245,90 @@ https://youtu.be/SO_8z9tvXK4
 ###    3. Palettes that transition from one color two another are good for mapping change in reactivity data.
 ###    4. Viridis palettes, Viridis, Magma, Plasma, Inferno, and cividis are not recommended because they result in cluttered secondary structures. Viridis makes great palettes, but they don’t look good on RNA secondary structures.
 
+## 4.2 Mapping reactivity data to color palettes with “r2easyR.colors”
+
+
+### R2easyR contains a function called “r2easyR.color” that assigns colors based on reactivities. “r2easyR.color” uses the following syntax to add color information to a data frame containing a “Reactivity” column:
+
+```{r}
+df <- r2easyR.color(df,
+                    palettes$Reds.c)
+head(df)
+    N Nucleotide N-1 N+1 BP   N Dotbracket Reactivity Labels  Colors
+1 800          G 799 801  0 800          .         NA      0 dimgrey
+2 801          C 800 802  0 801          .  0.1449481      1 #FEE0D2
+3 802          A 801 803  0 802          .  0.7508100      1 #FC9272
+4 803          U 802 804  0 803          .         NA      0 dimgrey
+5 804          C 803 805  0 804          .  1.7018361      1 #CB181D
+6 805          U 804 806  0 805          .         NA      0 dimgrey
+```
+### This will add two columns to the data frame “(df), a “Label” column that is used by R2easyR to determine if there is data or not and a “Colors” column that contains R formatted colors. After the “Label” and “Colors” columns are made with “r2easyR.colors”, R2R input files are written with the R2easyR writing function “r2easyR” (see section 5.1), and R2R is used to write a PDF depiction of the secondary structure (see section 5.3).
+
+### “r2easyR.color” also prints two helpful PDFs when it runs. The first, labeled “Rxn_plot.pdf” is a plot of reactivity versus nucleotide number, with data points colored as they will appear in the final PDF. Looking at “Rxn_plot.pdf” is a quick way to know how a given palette will make your secondary structure look. The second PDF, labeled “Legend.pdf” is a legend you can use for your secondary structure. One can simply open “Legend.pdf” in Illustrator and copy and paste it where it needs to go.
+
+![Rx_plot_legen_example](https://user-images.githubusercontent.com/63312483/104642148-a1781d80-5678-11eb-97b4-0564fc20bce9.png)
+
+## 4.3 Using a reactivity threshold to remove low reactivity data that cause clutter
+
+### Low reactivity data that is almost 0 can make a RNA secondary structure look very cluttered, especially if you have quantified a gel becuase every nucleotide will have some baseline level of reactivity, which can make the resulting secondary structure look cluttered. “r2easyR.color” has an argument called “abs_reactivity_threshold” that will have “r2easyR.color” treat any reactivity data below this threshold like there is no data presenta, so that it does not clutter up the figure. For example:
+
+```{r}
+df <- r2easyR.color(df,
+                    palettes$Reds.c,
+                    abs_reactivity_threshold = 0.2)
+head(df)
+    N Nucleotide N-1 N+1 BP   N Dotbracket Reactivity Labels  Colors
+1 800          G 799 801  0 800          .         NA      0 dimgrey
+2 801          C 800 802  0 801          .  0.1449481      0 dimgrey
+3 802          A 801 803  0 802          .  0.7508100      1 #FC9272
+4 803          U 802 804  0 803          .         NA      0 dimgrey
+5 804          C 803 805  0 804          .  1.7018361      1 #CB181D
+6 805          U 804 806  0 805          .         NA      0 dimgrey
+```
+
+### Note: reactivity values below 0.2 are treated like missing reactivity values in the “Label” and “colors” column
+
+## 4.4 Specifying a manual scale
+
+### A "r2easyR.color" argument called "manual.scale" can be used to specify the scale that "r2easyR.color" should map reactivity data too. "manual.scale" is useful in two situations. The first is when you want to map reactivity to more than one secondary sctructure using the same scale. The second is when one nucleotide is much more reactive than the rest of the nucleotides in the data set, so that reactivity of most of the nucleotides are bleached out by the highly reactive nucleotide in the final secondary structure. In the second case, you can set the manual scale so that it fits the more numerous less reactive data and maps the extreamly reactive nucleotide to the strongest color in the palette. Setting a manual scale is simple:
+
+```{r}
+>df <- r2easyR.color(df,
+                    palettes$Reds.c,
+                    abs_reactivity_threshold = 0.2,
+                    manual.scale = c(0, 2))
+>head(df)
+    N Nucleotide N-1 N+1 BP   N Dotbracket Reactivity Labels  Colors
+1 800          G 799 801  0 800          .         NA      0 dimgrey
+2 801          C 800 802  0 801          .  0.1449481      0 dimgrey
+3 802          A 801 803  0 802          .  0.7508100      1 #FC9272
+4 803          U 802 804  0 803          .         NA      0 dimgrey
+5 804          C 803 805  0 804          .  1.7018361      1 #CB181D
+6 805          U 804 806  0 805          .         NA      0 dimgrey
+```
+
+## 4.5 Other r2easyR.color arguments
+
+### The purpose of r2easyR.color arguments are explained by the help file. Pulling up the help file is simple:
+
+```{r}
+?r2easyR.write
+```
+
+## 5 Writing R2R input files with R2easyR and making figures with R2R
+
+### R2easyR contains the function “r2easyR.write”, which writes the files R2R uses to draw a secondary structure. The syntax is simple:
+
+```{r}
+r2easyR.write("Example", df, colors = "circles")
+```
+
+### The first argument is the prefix that you want on the files you are writing. “r2easyR.write” will add the file suffixes “.sto” and “.r2r_meta” for you. The second argument is a data frame that was made with “r2easyR.colors”. The third argument is the name of the RNA you are drawing. You don’t have to set this argument. The RNA we are currently drawing was made up, so I called it “made up”. Other arguments are explained in the help file:
+
+```{r}
+?r2easyR.write
+```
+
+### Note that the argument “colors” is how you want R2R to draw the reactivity data. The options are, “NA” to not draw any reactivity data, “letters” to color the letters according to their reactivity, and “circles” to draw reactivity data as circles behind the nucleotides. I like "circles" the best.
+
+### 
