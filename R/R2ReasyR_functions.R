@@ -53,8 +53,8 @@ add.dot.bracket = function(ctdata_frame){
      dotbracket[i] <- "."
    }
     else{
-      if (as.numeric(ctdata_frame$BP[i]) > as.numeric(ctdata_frame$N[i])){ dotbracket[i] <- "<" }
-      if (as.numeric(ctdata_frame$BP[i]) < as.numeric(ctdata_frame$N[i])){ dotbracket[i] <- ">" }
+      if (as.numeric(as.character(ctdata_frame$BP[i])) > as.numeric(as.character(ctdata_frame$N[i]))){ dotbracket[i] <- "<" }
+      if (as.numeric(as.character(ctdata_frame$BP[i])) < as.numeric(as.character(ctdata_frame$N[i]))){ dotbracket[i] <- ">" }
     }
   }
   ctdata_frame$Dotbracket <- dotbracket
@@ -644,6 +644,7 @@ r2easyR.write = function(output,
                    paste("#=GC cov_SS_cons", gsub(", ", "", toString(rep("3", length(data_frame$Nucleotide)))), sep = "\t"),
                    gsub(", ", "\n",toString(unique(a))),
                    "#=GF R2R SetDrawingParam nucShrinkWithCircleNuc 1 pairBondScaleWithCircleNuc 1",
+                   paste("#=GF R2R tick_label_regular_numbering ", data_frame$N[1], " 10 firstNucNum ", data_frame$N[1], sep = ""),
                    "//"),
                  fileConn)
       close(fileConn)
@@ -658,6 +659,7 @@ r2easyR.write = function(output,
                    paste("#=GC conss", gsub(", ", "", toString(rep("2", length(data_frame$Nucleotide)))), sep = "\t"),
                    paste("#=GC cov_SS_cons", gsub(", ", "", toString(rep("3", length(data_frame$Nucleotide)))), sep = "\t"),
                    "#=GF R2R SetDrawingParam nucShrinkWithCircleNuc 1 pairBondScaleWithCircleNuc 1",
+                   paste("#=GF R2R tick_label_regular_numbering ", data_frame$N[1], " 10 firstNucNum ", data_frame$N[1], sep = ""),
                    "//"),
                  fileConn)
       close(fileConn)
@@ -677,6 +679,7 @@ r2easyR.write = function(output,
                  paste("#=GC conss", gsub(", ", "", toString(rep("2", length(data_frame$Nucleotide)))), sep = "\t"),
                  paste("#=GC cov_SS_cons", gsub(", ", "", toString(rep("3", length(data_frame$Nucleotide)))), sep = "\t"),
                  gsub(", ", "\n",toString(unique(a))),
+                 paste("#=GF R2R tick_label_regular_numbering ", data_frame$N[1], " 10 firstNucNum ", data_frame$N[1], sep = ""),
                  "//"),
                fileConn)
     close(fileConn)
