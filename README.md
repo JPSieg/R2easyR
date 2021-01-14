@@ -309,10 +309,10 @@ head(df)
 
 ## 4.5 Other r2easyR.color arguments
 
-### The purpose of r2easyR.color arguments are explained by the help file. Pulling up the help file is simple:
+### The purpose of other r2easyR.color arguments are explained by the help file. Pulling up the help file is simple:
 
 ```{r}
-?r2easyR.write
+>?r2easyR.colot
 ```
 
 ## 5 Writing R2R input files with R2easyR and making figures with R2R
@@ -320,15 +320,29 @@ head(df)
 ### R2easyR contains the function “r2easyR.write”, which writes the files R2R uses to draw a secondary structure. The syntax is simple:
 
 ```{r}
-r2easyR.write("Example", df, colors = "circles")
+>r2easyR.write("Example", df, colors = "circles")
 ```
 
 ### The first argument is the prefix that you want on the files you are writing. “r2easyR.write” will add the file suffixes “.sto” and “.r2r_meta” for you. The second argument is a data frame that was made with “r2easyR.colors”. The third argument is the name of the RNA you are drawing. You don’t have to set this argument. The RNA we are currently drawing was made up, so I called it “made up”. Other arguments are explained in the help file:
 
 ```{r}
-?r2easyR.write
+>?r2easyR.write
 ```
 
 ### Note that the argument “colors” is how you want R2R to draw the reactivity data. The options are, “NA” to not draw any reactivity data, “letters” to color the letters according to their reactivity, and “circles” to draw reactivity data as circles behind the nucleotides. I like "circles" the best.
 
-### 
+### The writing function “r2easyR” writes two R2R input files, a stockholm formatted alignment file (suffix “.sto”) and a R2R meta file (suffix “.r2r_meta”). The Stockholm file contains all of the raw data R2R needs to draw a structure. The R2R meta file contains settings for drawing a specific RNA. If your RNA is short or simple, you will likely not need to edit the R2R inputs provided by R2easyR to get a publication quality figure. If your RNA is larger and/or complex, you may need to specify the layout of a few secondary structure elements. There is a layout editor called "r2easyR.stem_editor" built into R2easyR that will provide a nice layout for most RNA (see Section 6). Use "list.files" to see the stockholm and R2R meta file.
+
+```{r}
+>list.files()
+ [7] "Example.r2r_meta"               "Example.sto"
+```
+
+### Now you can generate your secondary structure using R2R. First you need to switch to a bash terminal with R2R installed. The terminal provided by RStudio works just fine. In your bash terminal, run:
+
+```{r}
+$ cd ~/Path/to/R2R_meta_file
+$r2r --disable-usage-warning Example.r2r_meta Example.pdf
+```
+
+
