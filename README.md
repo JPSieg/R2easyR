@@ -22,14 +22,7 @@
 
 ### The four core R2easyR functions can be used in a R script to generate generate a single RNA secondary structure in a couple minutes starting with a .csv file (Video turotial 1) or a .ct file (Video tutorial 2). Alternatively, if you are good at R scripting, one can run the four core R2easyR on a loop to print RNA secondary structures depictions in bulk. Two such bulk structure printers are built into R2easyR. The first is called "ry.tRNA" and maps reactivity data to near-"cloverleaf" tRNA structures in bulk starting with .ct and .shape formated secondary structure/reactivity data. The second, called "r2easyR.go_fast" maps reactivity data to any RNA secondary structure in bulk starting with .ct and .shape formated secondary structure/reactivity data (Video tutorial 3).
 
-## Installation
-
-## In your R console
-###    > install.packages("devtools")
-
-###    > devtools::install_github("JPSieg/R2easyR")
-
-## Video tutorials
+##Video tutorials
 
 ### 1.) Using R2easyR to map reactivity data to a simple RNA 2-structure using a .csv
 
@@ -42,3 +35,48 @@ https://youtu.be/2wCFcz3NEiw
 ### 3.) Using R2easyR to map reactivity data to RNA 2-structures in bulk using CT files from RNAstructure
 
 https://youtu.be/SO_8z9tvXK4
+
+## Installation
+
+### Prior to installing R2easyR, please install R. If you are not used to R or other command- line programs, I strongly recommend downloading and working in RStudio. To install R2easyR on your R console, open your R terminal or RStudio and type:
+
+```{r}
+install.packages(“devtools”)
+```
+
+### This will take a minute. Install any dependent packages. “devtools” is a fantastic R package for developing, distributing, and downloading R packages. I cannot guarantee that your R2easyR installation will work without “devtools”. After “devtools” is installed, type/enter:
+
+```{r}
+devtools::install_github(“JPSieg/R2easyR”)
+```
+
+### R2easyR should be installed in a few minutes. The command prompt may ask you to update dependent packages. I recommend skipping the update by entering an empty line. If you are using a fairly recent version of R, not much has changed and the updates can take a while. To check the installation when it finishes, type/enter.
+
+```{r}
+library(R2easyR)
+?r2easyR.color
+```
+
+### The help files for the function “r2easyR.color” will pop up if R2easyR was installed correctly. Note the “library” function does not require quotation marks around the package. “library” loads the R2easyR package from your R library into your R memory. Thus, you will need to use “library” again after you close and restart R. You can also call R2easyR functions explicitly using the following syntax, with no need to use “library”.
+
+```{r}
+<package>::<function>
+```
+
+### For example:
+
+```{r}
+?R2easyR::r2easyR.color
+```
+
+### R2easyR relies on 4 common packages that do not come with base R: “ggplot2”, “viridis”, “RColorBrewer”, and “R.utils”. If you are a R user, you have probably already installed them. If not, or you are not sure, please install or reinstall using:
+
+```{r}
+install.packages("package")
+```
+
+### For example:
+
+```{r}
+install.packages(“ggplot2”)
+```
