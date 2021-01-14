@@ -344,5 +344,7 @@ head(df)
 $ cd ~/Path/to/R2R_meta_file
 $r2r --disable-usage-warning Example.r2r_meta Example.pdf
 ```
+### R2R will print a figure that looks like this:
 
+![Example](https://user-images.githubusercontent.com/63312483/104652988-e9527100-5687-11eb-801b-328476a69c2d.png)
 
