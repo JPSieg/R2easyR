@@ -80,3 +80,50 @@ install.packages("package")
 ```{r}
 install.packages(“ggplot2”)
 ```
+
+### Reinstalling R2easyR on top of an existing R2easyR installation can corrupt the help files. Thus, if you need to reinstall R2easyR, please remove the current installation and then reinstall R2easyR. First, restart R so you are not removing a package that is currently loaded in the memory:
+
+```{r}
+q()
+```
+
+### Then restart R and run:
+
+```{r}
+devtools::install_github("JPSieg/R2easyR")
+```
+
+## Loading data into R and Formatting it for R2easyR
+
+### The goal of loading your data into R is to supply R2easyR the nucleotide number (N), the nucleotide sequence, the secondary structure (in dot-bracket notation (.<.>.), and the Reactivity data you want to map. R2easyR functions work on data frames, a R data format that resembles a table where each column is labeled. The order of these columns does not matter, but the columns must be labeled as exactly "N", "Nucleotide", "Dotbracket", "Reactivity".
+
+## Loading data into R with a comma separated value (.csv) text file
+
+### This is the easiest data loading strategy, and is best for reactivity data that comes from a quantified gel. Simply open up Excel, label the first four cells (A1:A4) with the header of Figure 2, and then enter the information for your RNA. Then, save as a Comma Separated Value (“.csv”) file. For example:
+
+![Simple_RNA](https://user-images.githubusercontent.com/63312483/104630233-88677080-5668-11eb-9925-63932e3a3fb3.png)
+
+### Also note that missing reactivity values are specified by leaving the cell blank. Please do not use a text string like "NA" as a place holder for missing values, as this will mess with the data when it is read into R.
+
+### Now your “.csv” file can be read into a data frame (df) using “read.csv”:
+
+```{r}
+df <- read.csv("file_name.csv")
+```
+
+### You can check your data frame (df) using the "head" function or the "View" function.
+
+```{r}
+head(df)
+
+  N Nucleotide Dotbracket Reactivity
+1 1          G          .         NA
+2 2          A          .        0.6
+3 3          C          <        0.2
+4 4          G          <         NA
+5 5          T          <         NA
+6 6          A          <        0.1
+
+View(df)
+```
+
