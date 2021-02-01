@@ -86,6 +86,9 @@ read.react = function(data_file){
       if (toString(reactivity[[i]][j]) != "NA"){reactivity[[i]][j] <- as.numeric(toString(reactivity[[i]][j]))}
     }
   }
+  for (i in c(1:length(reactivity))){
+    reactivity[[i]] <- as.numeric(as.character(reactivity[[i]]))
+  }
   output <- reactivity
 }
 
