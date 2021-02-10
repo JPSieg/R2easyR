@@ -3,6 +3,7 @@
 export(What.bob.knows)
 export(add.dot.bracket)
 export(check.accn)
+export(peter.ct.reformat)
 export(r2easyR.color)
 export(r2easyR.custom.palette)
 export(r2easyR.go_fast)
