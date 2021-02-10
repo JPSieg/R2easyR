@@ -7,19 +7,21 @@
 #' @export
 read.rtsc = function(data_file){
   con = file(data_file)
-  
+
   lines = readLines(con)
-  
+
+  close(con)
+
   lines = lines[-which(lines == "")]
-  
+
   names.vector = lines[seq(1, length(lines) - 1, by = 2)]
   stops.vector = lines[seq(2, length(lines), by = 2)]
-  
+
   parse.stops = function(x){as.numeric(as.character(strsplit(x, split = "\t")[[1]]))}
-  
+
   Reactivity.list = lapply(stops.vector, FUN = parse.stops)
-  
+
   names(Reactivity.list) = names.vector
-  
+
   Output <- Reactivity.list
 }
