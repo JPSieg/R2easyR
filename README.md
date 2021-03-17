@@ -40,7 +40,7 @@ https://youtu.be/SO_8z9tvXK4
 
 # Manual
 
-## Installation
+# 1. Installation
 
 ### Prior to installing R2easyR, please install R. If you are not used to R or other command- line programs, I strongly recommend downloading and working in RStudio. To install R2easyR on your R console, open your R terminal or RStudio and type:
 
@@ -97,11 +97,11 @@ https://youtu.be/SO_8z9tvXK4
 >devtools::install_github("JPSieg/R2easyR")
 ```
 
-## Loading data into R and Formatting it for R2easyR
+# 2. Loading data into R and Formatting it for R2easyR
 
 ### The goal of loading your data into R is to supply R2easyR the nucleotide number (N), the nucleotide sequence, the secondary structure (in dot-bracket notation (.<.>.), and the Reactivity data you want to map. R2easyR functions work on data frames, a R data format that resembles a table where each column is labeled. The order of these columns does not matter, but the columns must be labeled as exactly "N", "Nucleotide", "Dotbracket", "Reactivity".
 
-## Loading data into R with a comma separated value (.csv) text file
+## 2.1 Loading data into R with a comma separated value (.csv) text file
 
 ### This is the easiest data loading strategy, and is best for reactivity data that comes from a quantified gel. Simply open up Excel, label the first four cells (A1:A4) with the header of Figure 2, and then enter the information for your RNA. Then, save as a Comma Separated Value (“.csv”) file. For example:
 
@@ -131,7 +131,7 @@ https://youtu.be/SO_8z9tvXK4
 >View(df)
 ```
 
-## Loading a connectivity table (“.ct”) file into R and converting the ".ct" format to “dot-bracket” format in R
+## 2.2 Loading a connectivity table (“.ct”) file into R and converting the ".ct" format to “dot-bracket” format in R
 
 ### Specifying a secondary structure with the Dotbracket notation can be prohibitively tricky for long RNA. RNA secondary structure prediction algorithms like RNAStructure (https://rna.urmc.rochester.edu/RNAstructure.html) uses the “.ct” format to specify a RNA secondary structure. R2easyR contains a function called “read.ct” to read a “.ct” file into a R data frame and a function called "add.dot.bracket" to convert the ".ct" format to the "dot-bracket" format. The syntax for “read.ct” is the same as “read.csv”:
 
@@ -161,7 +161,7 @@ https://youtu.be/SO_8z9tvXK4
 6 805          U 804 806  0 805          .
 ```
 
-## Loading in reactivity data from “.react” and ".shape" files and placing reactivity data into a data frame
+## 2.3 Loading in reactivity data from “.react” and ".shape" files and placing reactivity data into a data frame
 
 ### StructureFold2 (https://github.com/StructureFold2/StructureFold2) formats reactivity data in “.react” files. R2easyR contains a function called “read.react” that reads reactivity data into a R list that is named by the RNA. Likwise, ShapeMapper (https://weekslab.com/software/) formats reactivity data in “.shape” files. R2easyR contains a function called “read.shape” that reads reactivity data into R. Reactivity data is easily placed into a data frame after it is read into R using "read.react" or "read.shape".
 
@@ -191,9 +191,9 @@ https://youtu.be/SO_8z9tvXK4
 6 805          U 804 806  0 805          .         NA
 ```
 
-## Generating Color Palettes with R2easyR
+# 3. Generating Color Palettes with R2easyR
 
-## Generating color palettes that are built into R2easyR
+## 3.1 Generating color palettes that are built into R2easyR
 
 ### R2easyR uses pallets consisting of vectors containing 35 R colors, arranged from coolest/least-intense to warmest/most-intense. R2easyR contains a function called “r2easyR.palettes” that generates a curated list of 59 palettes using RColorBrewer (https://cran.r-project.org/web/packages/RColorBrewer/index.html) and Viridis palettes (https://mran.revolutionanalytics.com/web/packages/viridis/vignettes/intro-to-viridis.html). These palettes can be fed into the function "r2easyR.color" to color nucleotides. The following code will generate that list in an object called “palettes”:
 
@@ -214,7 +214,7 @@ https://youtu.be/SO_8z9tvXK4
 
 ![Legend](https://user-images.githubusercontent.com/63312483/104636874-0419eb00-5672-11eb-8c24-85ac1107d12c.png)
 
-## Creating a custom color palette
+## 3.2 Creating a custom color palette
 
 ### R2easyR contains a function called “r2easyR.custom.palette” for creating your own palette. “r2easyR.custom.palette” converts a vector containing 35 or less R colors to a format that “r2easyR.color” can use. To make a vector(“a”) containing R colors we use the “c()” syntax. First we have to make a vector containing the colors we want.
 
@@ -236,7 +236,7 @@ https://youtu.be/SO_8z9tvXK4
 ### “testpall” is now an R object that can be fed into “r2easyR.color” to assign colors to reactivity data.
 
 
-## 4 Mapping Reactivity Data to Color Pallets with R2easyR
+# 4 Mapping Reactivity Data to Color Pallets with R2easyR
 
 ## 4.1 Choosing a color pallet
 
@@ -317,7 +317,7 @@ head(df)
 >?r2easyR.colot
 ```
 
-## 5 Writing R2R input files with R2easyR and making figures with R2R
+# 5 Writing R2R input files with R2easyR and making figures with R2R
 
 ### R2easyR contains the function “r2easyR.write”, which writes the files R2R uses to draw a secondary structure. The syntax is simple:
 
@@ -343,10 +343,24 @@ head(df)
 ### Now you can generate your secondary structure using R2R. First you need to switch to a bash terminal with R2R installed. The terminal provided by RStudio works just fine. In your bash terminal, run:
 
 ```{r}
-$ cd ~/Path/to/R2R_meta_file
+$ cd ~/Path/to/directory
 $r2r --disable-usage-warning Example.r2r_meta Example.pdf
 ```
 ### R2R will print a figure that looks like this:
 
 ![Example](https://user-images.githubusercontent.com/63312483/104652988-e9527100-5687-11eb-801b-328476a69c2d.png)
+
+# 6. Programatic customizations in R2easyR
+
+### The default layout provided by R2R may not be perfect, where stems are clashing and falling in on themselves. For large structures, this can look like a pile of spagetti. R2R has place explicit commands that allow you to customize a layout, but these can be tricky to learn and implement. Likewise, you may want to have different regions of the RNA have different nucleotide colors for a number of reasons. The most common reason is because you are trying to draw the interaction of two different RNA, or parts of an RNA that are very far apart. The easy way to handle this is to add some filler sequence, for example a string of Us, then have R2R color them white so that they disapear. Another common reason is because no data is availible for a certain region, and you want it to be grey. This section will introduce a functions that edit the R2R stockholm files to optimize the stem layouts and color large swaths of nucleotides.
+
+## 6.1 Optomized stem layouts in R2easyR
+
+###
+
+## 6.2 Coloring nucleotides in a structure
+
+# 7. Drawing psuedoknots
+
+###
 
