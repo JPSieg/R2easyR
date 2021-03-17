@@ -356,7 +356,47 @@ $r2r --disable-usage-warning Example.r2r_meta Example.pdf
 
 ## 6.1 Optomized stem layouts in R2easyR
 
-###
+### A commen customization to figures produced by R2R is using place explicit commands to flip adjacent helices across the line of the backbone in order to keep helices that are close together from clashing in 2D space. R2easyR contains a built in stem editor called "r2easyR.stem_editor" that will write the place explicit commands for you, resulting in a more optimum layout for most RNA that are less than 200 nucleotides long. As an example, see this depiction of part of the E. coli 16S-rRNA:
+
+![Stem_editor_effects](https://user-images.githubusercontent.com/63312483/111514682-576af100-8728-11eb-9455-a8c00e1264f7.png)
+
+### The "r2easyR.stem_editor" edits the stockholm file directly, meaning that you should apply the stem editor after you have written R2R imputs. For, example:
+
+```{r}
+>list.files()
+ [7] "demo.r2r_meta"               "demo.sto"
+>r2easyR.stem_editor("demo.sto")
+[1] "# STOCKHOLM 1.0"                                                                                                                                                                                   
+ [2] "default\tAAAUUGAAGAGUUUGAUCAUGGCUCAGAUUGAACGCUGGCGGCAGGCCUAACACAUGCAAGUCGAACGGUAACAGGAAGAAGCUUGCUUCUUUGCUGACGAGUGGCUUUUUUUUUUGCAGUGGGUUUGCACAAUGGGCGCAAGCCUGAUGCAGCCAUGCCGCUUUUAGCGUUAAUC"         
+ [3] "#=GC SS_cons\t........<<<<<.......>>>>>.<<<<.<<<<<<.<<<<<<<<<....<<<.<<<..<<<..<<<<<..<<<<<<<<<<....>>>>>>>.>>>>>.>>>>>>..........>>>>>>.>.<.<<<...<<<<<....>>>>>.>>>>.>>.>>>>>>....>>>>>>>>>>"    
+ [4] "#=GC R2R_LABEL\t..........................A....................................................................................................................................................."  
+ [5] "#=GC cons\tAAAUUGAAGAGUUUGAUCAUGGCUCAGAUUGAACGCUGGCGGCAGGCCUAACACAUGCAAGUCGAACGGUAACAGGAAGAAGCUUGCUUCUUUGCUGACGAGUGGCUUUUUUUUUUGCAGUGGGUUUGCACAAUGGGCGCAAGCCUGAUGCAGCCAUGCCGCUUUUAGCGUUAAUC"       
+ [6] "#=GC conss\t22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222"      
+ [7] "#=GC cov_SS_cons\t33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333"
+ [8] "#=GF R2R circle_nuc #:30 rgb:227,26,28"                                                                                                                                                            
+ [9] "#=GF R2R circle_nuc #:54 rgb:254,217,118"                                                                                                                                                          
+[10] "#=GF R2R circle_nuc #:58 rgb:254,178,76"                                                                                                                                                           
+[11] "#=GF R2R circle_nuc #:62 rgb:254,178,76"                                                                                                                                                           
+[12] "#=GF R2R circle_nuc #:65 rgb:254,178,76"                                                                                                                                                           
+[13] "#=GF R2R circle_nuc #:66 rgb:253,141,60"                                                                                                                                                           
+[14] "#=GF R2R circle_nuc #:68 rgb:254,178,76"                                                                                                                                                           
+[15] "#=GF R2R circle_nuc #:69 rgb:254,217,118"                                                                                                                                                          
+[16] "#=GF R2R circle_nuc #:70 rgb:254,217,118"                                                                                                                                                          
+[17] "#=GF R2R circle_nuc #:72 rgb:254,217,118"                                                                                                                                                          
+[18] "#=GF R2R circle_nuc #:73 rgb:254,217,118"                                                                                                                                                          
+[19] "#=GF R2R circle_nuc #:84 rgb:254,217,118"                                                                                                                                                          
+[20] "#=GF R2R circle_nuc #:85 rgb:252,78,42"                                                                                                                                                            
+[21] "#=GF R2R circle_nuc #:88 rgb:227,26,28"                                                                                                                                                            
+[22] "#=GF R2R circle_nuc #:90 rgb:254,217,118"                                                                                                                                                          
+[23] "#=GF R2R circle_nuc #:96 rgb:254,217,118"                                                                                                                                                          
+[24] "#=GF R2R circle_nuc #:97 rgb:254,217,118"                                                                                                                                                          
+[25] "#=GF R2R SetDrawingParam nucShrinkWithCircleNuc 1 pairBondScaleWithCircleNuc 1"                                                                                                                    
+[26] "#=GF R2R tick_label_regular_numbering 1 10 firstNucNum 1"                                                                                                                                          
+[27] "#=GF R2R place_explicit A A-- 45 1 0 0 0 90 f"                                                                                                                                                     
+[28] "//"
+```
+
+### The stem editor will print the lines for the new stockholm file in your R console. Note the place explicit command that was added on line 27. Rerun R2R on the R2R meta file to get a new figure with an optimized layout.
 
 ## 6.2 Coloring nucleotides in a structure
 
