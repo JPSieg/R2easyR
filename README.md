@@ -471,5 +471,81 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 # 7. Drawing psuedoknots
 
-###
+### Drawing a psuedoknot is a perineal problem for depicting secondary structure. A good strategy is to draw the secondary structure of the RNA in the absence of psuedoknots and label those psuedoknots after the core R2R.sto file is written. R2easyR contains a function called "r2easyR.pknot_drawer" which will edit the R2R.sto file to label certain sequences as a psuedoknot.
+
+### For example, first read in a psuedonot secondary structure as a text file with CT or dotbracket formatted secondary structure information as you would for a normal secondary structure. Then find your psuedoknotted sequence. In the case of our sample RNA, the psuedoknot occurs at nucleotides 14 to 18 and nucleotides 64 to 68.
+
+```{r}
+>df[c(14:18, 64:68),]
+   N Nucleotide N-1 N+1 BP  N Dotbracket
+14 14          A  13  15 68 14          <
+15 15          G  14  16 67 15          <
+16 16          C  15  17 66 16          <
+17 17          C  16  18 65 17          <
+18 18          C  17  19 64 18          <
+64 64          G  63  65 18 64          >
+65 65          G  64  66 17 65          >
+66 66          G  65  67 16 66          >
+67 67          C  66  68 15 67          >
+68 68          U  67   0 14 68          >
+```
+
+### Remove the psuedoknot by changing the Dotbracket column so that no secondary structure is specified at the psuedoknot sequence.
+
+```{r}
+>pknot <- c(14:18, 64:68)
+>df$Dotbracket[pknot] <- "."
+>df[c(14:18, 64:68),]
+    N Nucleotide N-1 N+1 BP  N Dotbracket
+14 14          A  13  15 68 14          .
+15 15          G  14  16 67 15          .
+16 16          C  15  17 66 16          .
+17 17          C  16  18 65 17          .
+18 18          C  17  19 64 18          .
+64 64          G  63  65 18 64          .
+65 65          G  64  66 17 65          .
+66 66          G  65  67 16 66          .
+67 67          C  66  68 15 67          .
+68 68          U  67   0 14 68          .
+```
+
+### The R2R imput files can be written and edited normally.
+
+```{r}
+>r2easyR.write("demo", df)
+>r2easyR.stem_editor("demo.sto")
+```
+
+### Running R2R on the inputs you just generated will result in a secondary structure with no psuedoknot specified. You can add the psuedoknot with the psuedoknot drawer, which edits the R2R.sto file directly. The stem editor will print the lines it edited in the console.
+
+```{r}
+>r2easyR.pknot_drawer(pknot = pknot,  R2R.sto = "demo.sto")
+[1] "#=GC R2R_LABEL\t.............aaaaa.............A........................N......bbbbb"
+[1] "#=GC R2R_XLABEL_pk\t...............a.................................................b.."
+[2] "#=GF R2R outline_nuc a"                                                                  
+[3] "#=GF R2R outline_nuc a"                                                                  
+[4] "#=GF R2R tick_label pk:a pk1"                                                            
+[5] "#=GF R2R outline_nuc b"                                                                  
+[6] "#=GF R2R outline_nuc b"                                                                  
+[7] "#=GF R2R tick_label pk:b pk1"                                                            
+```
+![Pknot_drawer](https://user-images.githubusercontent.com/63312483/111663673-6bc1f300-87e7-11eb-90c9-d4a4b55ece16.png)
+
+### You can add a second psuedoknot to the drawing by rerunning the psuedoknot labeler on a new sequence.
+
+```{r}
+>r2easyR.pknot_drawer(pknot = c(46:47, 61:62),  R2R.sto = "demo.sto")
+[1] "#=GC R2R_LABEL\t.............aaaaa.............A.............cc.........N...dd.bbbbb"
+[1] "#=GC R2R_XLABEL_pk\t..............................................c..............d......"
+[2] "#=GF R2R outline_nuc c"                                                                  
+[3] "#=GF R2R outline_nuc c"                                                                  
+[4] "#=GF R2R tick_label pk:c pk2"                                                            
+[5] "#=GF R2R outline_nuc d"                                                                  
+[6] "#=GF R2R outline_nuc d"                                                                  
+[7] "#=GF R2R tick_label pk:d pk2"   
+  
+```
+
+### Note: the psuedoknot labeler will count how many other psuedoknots have been added by the labler and automatically update the index. For example the second psuedoknot we labeled is called pk2.
+
 
