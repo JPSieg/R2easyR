@@ -6,6 +6,8 @@
 
 ### Manually drawing experimental RNA reactivity data as colors on a secondary structure is time consuming and error prone. R2easyR, when used with the drawing program R2R, makes processing reactivity data, and drawing the reactivity on a secondary structure much easier. With a small amount of workup in a drawing program, the output of the mostly automated R2easyR/R2R pipline produces publication-ready figures rapidly.
  
+### Acknowledgement: This work is supported by National Institutes of Health Grant R35-GM127064 to PCB.
+
 ## Gallery of examples
 
 ![R2easyR gallery](https://user-images.githubusercontent.com/63312483/96524425-3ae48e80-1246-11eb-9240-94b50aa1b3ec.png)
@@ -38,7 +40,7 @@ https://youtu.be/SO_8z9tvXK4
 
 # Manual
 
-## Installation
+# 1. Installation
 
 ### Prior to installing R2easyR, please install R. If you are not used to R or other command- line programs, I strongly recommend downloading and working in RStudio. To install R2easyR on your R console, open your R terminal or RStudio and type:
 
@@ -95,11 +97,11 @@ https://youtu.be/SO_8z9tvXK4
 >devtools::install_github("JPSieg/R2easyR")
 ```
 
-## Loading data into R and Formatting it for R2easyR
+# 2. Loading data into R and Formatting it for R2easyR
 
 ### The goal of loading your data into R is to supply R2easyR the nucleotide number (N), the nucleotide sequence, the secondary structure (in dot-bracket notation (.<.>.), and the Reactivity data you want to map. R2easyR functions work on data frames, a R data format that resembles a table where each column is labeled. The order of these columns does not matter, but the columns must be labeled as exactly "N", "Nucleotide", "Dotbracket", "Reactivity".
 
-## Loading data into R with a comma separated value (.csv) text file
+## 2.1 Loading data into R with a comma separated value (.csv) text file
 
 ### This is the easiest data loading strategy, and is best for reactivity data that comes from a quantified gel. Simply open up Excel, label the first four cells (A1:A4) with the header of Figure 2, and then enter the information for your RNA. Then, save as a Comma Separated Value (“.csv”) file. For example:
 
@@ -129,7 +131,7 @@ https://youtu.be/SO_8z9tvXK4
 >View(df)
 ```
 
-## Loading a connectivity table (“.ct”) file into R and converting the ".ct" format to “dot-bracket” format in R
+## 2.2 Loading a connectivity table (“.ct”) file into R and converting the ".ct" format to “dot-bracket” format in R
 
 ### Specifying a secondary structure with the Dotbracket notation can be prohibitively tricky for long RNA. RNA secondary structure prediction algorithms like RNAStructure (https://rna.urmc.rochester.edu/RNAstructure.html) uses the “.ct” format to specify a RNA secondary structure. R2easyR contains a function called “read.ct” to read a “.ct” file into a R data frame and a function called "add.dot.bracket" to convert the ".ct" format to the "dot-bracket" format. The syntax for “read.ct” is the same as “read.csv”:
 
@@ -159,7 +161,7 @@ https://youtu.be/SO_8z9tvXK4
 6 805          U 804 806  0 805          .
 ```
 
-## Loading in reactivity data from “.react” and ".shape" files and placing reactivity data into a data frame
+## 2.3 Loading in reactivity data from “.react” and ".shape" files and placing reactivity data into a data frame
 
 ### StructureFold2 (https://github.com/StructureFold2/StructureFold2) formats reactivity data in “.react” files. R2easyR contains a function called “read.react” that reads reactivity data into a R list that is named by the RNA. Likwise, ShapeMapper (https://weekslab.com/software/) formats reactivity data in “.shape” files. R2easyR contains a function called “read.shape” that reads reactivity data into R. Reactivity data is easily placed into a data frame after it is read into R using "read.react" or "read.shape".
 
@@ -189,9 +191,9 @@ https://youtu.be/SO_8z9tvXK4
 6 805          U 804 806  0 805          .         NA
 ```
 
-## Generating Color Palettes with R2easyR
+# 3. Generating Color Palettes with R2easyR
 
-## Generating color palettes that are built into R2easyR
+## 3.1 Generating color palettes that are built into R2easyR
 
 ### R2easyR uses pallets consisting of vectors containing 35 R colors, arranged from coolest/least-intense to warmest/most-intense. R2easyR contains a function called “r2easyR.palettes” that generates a curated list of 59 palettes using RColorBrewer (https://cran.r-project.org/web/packages/RColorBrewer/index.html) and Viridis palettes (https://mran.revolutionanalytics.com/web/packages/viridis/vignettes/intro-to-viridis.html). These palettes can be fed into the function "r2easyR.color" to color nucleotides. The following code will generate that list in an object called “palettes”:
 
@@ -212,7 +214,7 @@ https://youtu.be/SO_8z9tvXK4
 
 ![Legend](https://user-images.githubusercontent.com/63312483/104636874-0419eb00-5672-11eb-8c24-85ac1107d12c.png)
 
-## Creating a custom color palette
+## 3.2 Creating a custom color palette
 
 ### R2easyR contains a function called “r2easyR.custom.palette” for creating your own palette. “r2easyR.custom.palette” converts a vector containing 35 or less R colors to a format that “r2easyR.color” can use. To make a vector(“a”) containing R colors we use the “c()” syntax. First we have to make a vector containing the colors we want.
 
@@ -234,7 +236,7 @@ https://youtu.be/SO_8z9tvXK4
 ### “testpall” is now an R object that can be fed into “r2easyR.color” to assign colors to reactivity data.
 
 
-## 4 Mapping Reactivity Data to Color Pallets with R2easyR
+# 4 Mapping Reactivity Data to Color Pallets with R2easyR
 
 ## 4.1 Choosing a color pallet
 
@@ -315,7 +317,7 @@ head(df)
 >?r2easyR.colot
 ```
 
-## 5 Writing R2R input files with R2easyR and making figures with R2R
+# 5 Writing R2R input files with R2easyR and making figures with R2R
 
 ### R2easyR contains the function “r2easyR.write”, which writes the files R2R uses to draw a secondary structure. The syntax is simple:
 
@@ -341,10 +343,133 @@ head(df)
 ### Now you can generate your secondary structure using R2R. First you need to switch to a bash terminal with R2R installed. The terminal provided by RStudio works just fine. In your bash terminal, run:
 
 ```{r}
-$ cd ~/Path/to/R2R_meta_file
+$ cd ~/Path/to/directory
 $r2r --disable-usage-warning Example.r2r_meta Example.pdf
 ```
 ### R2R will print a figure that looks like this:
 
 ![Example](https://user-images.githubusercontent.com/63312483/104652988-e9527100-5687-11eb-801b-328476a69c2d.png)
+
+# 6. Programatic customizations in R2easyR
+
+### The default layout provided by R2R may not be perfect, where stems are clashing and falling in on themselves. For large structures, this can look like a pile of spagetti. R2R has place explicit commands that allow you to customize a layout, but these can be tricky to learn and implement. Likewise, you may want to have different regions of the RNA have different nucleotide colors for a number of reasons. The most common reason is because you are trying to draw the interaction of two different RNA, or parts of an RNA that are very far apart. The easy way to handle this is to add some filler sequence, for example a string of Us, then have R2R color them white so that they disapear. Another common reason is because no data is availible for a certain region, and you want it to be grey. This section will introduce a functions that edit the R2R stockholm files to optimize the stem layouts and color large swaths of nucleotides.
+
+## 6.1 Optomized stem layouts in R2easyR
+
+### A commen customization to figures produced by R2R is using place explicit commands to flip adjacent helices across the line of the backbone in order to keep helices that are close together from clashing in 2D space. R2easyR contains a built in stem editor called "r2easyR.stem_editor" that will write the place explicit commands for you, resulting in a more optimum layout for most RNA that are less than 200 nucleotides long. As an example, see this depiction of part of the E. coli 16S-rRNA:
+
+![Stem_editor_effects](https://user-images.githubusercontent.com/63312483/111514682-576af100-8728-11eb-9455-a8c00e1264f7.png)
+
+### The "r2easyR.stem_editor" edits the stockholm file directly, meaning that you should apply the stem editor after you have written R2R imputs. For, example:
+
+```{r}
+>list.files()
+ [7] "demo.r2r_meta"               "demo.sto"
+>r2easyR.stem_editor("demo.sto")
+[1] "# STOCKHOLM 1.0"                                                                                                                                                                                   
+ [2] "default\tAAAUUGAAGAGUUUGAUCAUGGCUCAGAUUGAACGCUGGCGGCAGGCCUAACACAUGCAAGUCGAACGGUAACAGGAAGAAGCUUGCUUCUUUGCUGACGAGUGGCUUUUUUUUUUGCAGUGGGUUUGCACAAUGGGCGCAAGCCUGAUGCAGCCAUGCCGCUUUUAGCGUUAAUC"         
+ [3] "#=GC SS_cons\t........<<<<<.......>>>>>.<<<<.<<<<<<.<<<<<<<<<....<<<.<<<..<<<..<<<<<..<<<<<<<<<<....>>>>>>>.>>>>>.>>>>>>..........>>>>>>.>.<.<<<...<<<<<....>>>>>.>>>>.>>.>>>>>>....>>>>>>>>>>"    
+ [4] "#=GC R2R_LABEL\t..........................A....................................................................................................................................................."  
+ [5] "#=GC cons\tAAAUUGAAGAGUUUGAUCAUGGCUCAGAUUGAACGCUGGCGGCAGGCCUAACACAUGCAAGUCGAACGGUAACAGGAAGAAGCUUGCUUCUUUGCUGACGAGUGGCUUUUUUUUUUGCAGUGGGUUUGCACAAUGGGCGCAAGCCUGAUGCAGCCAUGCCGCUUUUAGCGUUAAUC"       
+ [6] "#=GC conss\t22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222"      
+ [7] "#=GC cov_SS_cons\t33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333"
+ [8] "#=GF R2R circle_nuc #:30 rgb:227,26,28"                                                                                                                                                            
+ [9] "#=GF R2R circle_nuc #:54 rgb:254,217,118"                                                                                                                                                          
+[10] "#=GF R2R circle_nuc #:58 rgb:254,178,76"                                                                                                                                                           
+[11] "#=GF R2R circle_nuc #:62 rgb:254,178,76"                                                                                                                                                           
+[12] "#=GF R2R circle_nuc #:65 rgb:254,178,76"                                                                                                                                                           
+[13] "#=GF R2R circle_nuc #:66 rgb:253,141,60"                                                                                                                                                           
+[14] "#=GF R2R circle_nuc #:68 rgb:254,178,76"                                                                                                                                                           
+[15] "#=GF R2R circle_nuc #:69 rgb:254,217,118"                                                                                                                                                          
+[16] "#=GF R2R circle_nuc #:70 rgb:254,217,118"                                                                                                                                                          
+[17] "#=GF R2R circle_nuc #:72 rgb:254,217,118"                                                                                                                                                          
+[18] "#=GF R2R circle_nuc #:73 rgb:254,217,118"                                                                                                                                                          
+[19] "#=GF R2R circle_nuc #:84 rgb:254,217,118"                                                                                                                                                          
+[20] "#=GF R2R circle_nuc #:85 rgb:252,78,42"                                                                                                                                                            
+[21] "#=GF R2R circle_nuc #:88 rgb:227,26,28"                                                                                                                                                            
+[22] "#=GF R2R circle_nuc #:90 rgb:254,217,118"                                                                                                                                                          
+[23] "#=GF R2R circle_nuc #:96 rgb:254,217,118"                                                                                                                                                          
+[24] "#=GF R2R circle_nuc #:97 rgb:254,217,118"                                                                                                                                                          
+[25] "#=GF R2R SetDrawingParam nucShrinkWithCircleNuc 1 pairBondScaleWithCircleNuc 1"                                                                                                                    
+[26] "#=GF R2R tick_label_regular_numbering 1 10 firstNucNum 1"                                                                                                                                          
+[27] "#=GF R2R place_explicit A A-- 45 1 0 0 0 90 f"                                                                                                                                                     
+[28] "//"
+```
+
+### The stem editor will print the lines for the new stockholm file in your R console. Note the place explicit command that was added on line 27. Rerun R2R on the R2R meta file to get a new figure with an optimized layout.
+
+## 6.2 Coloring nucleotides in a structure
+
+### The "r2easyR.grey_letters_editor" allows you to specify the color for a large swath of nucleotides and runs on a syntax and functionallity similar to the "R2easyR.stem_editor". This section will cover two common applications- removing intervening artificial filler regions in a secondary structure and coloring nucleotides where no data is availible grey.
+
+### It is often informative to map reactivity data from a small portion of a large RNA onto a secondary structure. IIt is not necessary to draw the whole RNA, just a small subset. In the case of 16S-rRNA, the 5-prime region base pairs to nucleotides 500 residues ustream, and it is unnecessary and difficult to draw the intervening 300 nucleotide region. In this case, I like to replace the intervening region with a short string of Us in the original .csv file to simplify drawing. These Us can be reomoved by coloring them white using the grey letters editor. For example:
+
+![White_editor_effects](https://user-images.githubusercontent.com/63312483/111521923-17a80780-8730-11eb-84dc-7f6101d3fdc8.png)
+
+### Once agian, the grey letters editor is applied directly to the R2R.sto. The second argument specifies what regions should be colored and the third argument specifies the color.
+
+```{r}
+r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 163:166), "white")
+ [1] "# STOCKHOLM 1.0"                                                                                                                                                                                   
+ [2] "default\tAAAUUGAAGAGUUUGAUCAUGGCUCAGAUUGAACGCUGGCGGCAGGCCUAACACAUGCAAGUCGAACGGUAACAGGAAGAAGCUUGCUUCUUUGCUGACGAGUGGCUUUUUUUUUUGCAGUGGGUUUGCACAAUGGGCGCAAGCCUGAUGCAGCCAUGCCGCUUUUAGCGUUAAUC"         
+ [3] "#=GC SS_cons\t........<<<<<.......>>>>>.<<<<.<<<<<<.<<<<<<<<<....<<<.<<<..<<<..<<<<<..<<<<<<<<<<....>>>>>>>.>>>>>.>>>>>>..........>>>>>>.>.<.<<<...<<<<<....>>>>>.>>>>.>>.>>>>>>....>>>>>>>>>>"    
+ [4] "#=GC R2R_LABEL\t..........................A....................................................................................................................................................."  
+ [5] "#=GC cons\tAAAUUGAAGAGUUUGAUCAUGGCUCAGAUUGAACGCUGGCGGCAGGCCUAACACAUGCAAGUCGAACGGUAACAGGAAGAAGCUUGCUUCUUUGCUGACGAGUGGCUUUUUUUUUUGCAGUGGGUUUGCACAAUGGGCGCAAGCCUGAUGCAGCCAUGCCGCUUUUAGCGUUAAUC"       
+ [6] "#=GC conss\t22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222"      
+ [7] "#=GC cov_SS_cons\t33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333"
+ [8] "#=GF R2R circle_nuc #:30 rgb:227,26,28"                                                                                                                                                            
+ [9] "#=GF R2R circle_nuc #:54 rgb:254,217,118"                                                                                                                                                          
+[10] "#=GF R2R circle_nuc #:58 rgb:254,178,76"                                                                                                                                                           
+[11] "#=GF R2R circle_nuc #:62 rgb:254,178,76"                                                                                                                                                           
+[12] "#=GF R2R circle_nuc #:65 rgb:254,178,76"                                                                                                                                                           
+[13] "#=GF R2R circle_nuc #:66 rgb:253,141,60"                                                                                                                                                           
+[14] "#=GF R2R circle_nuc #:68 rgb:254,178,76"                                                                                                                                                           
+[15] "#=GF R2R circle_nuc #:69 rgb:254,217,118"                                                                                                                                                          
+[16] "#=GF R2R circle_nuc #:70 rgb:254,217,118"                                                                                                                                                          
+[17] "#=GF R2R circle_nuc #:72 rgb:254,217,118"                                                                                                                                                          
+[18] "#=GF R2R circle_nuc #:73 rgb:254,217,118"                                                                                                                                                          
+[19] "#=GF R2R circle_nuc #:84 rgb:254,217,118"                                                                                                                                                          
+[20] "#=GF R2R circle_nuc #:85 rgb:252,78,42"                                                                                                                                                            
+[21] "#=GF R2R circle_nuc #:88 rgb:227,26,28"                                                                                                                                                            
+[22] "#=GF R2R circle_nuc #:90 rgb:254,217,118"                                                                                                                                                          
+[23] "#=GF R2R circle_nuc #:96 rgb:254,217,118"                                                                                                                                                          
+[24] "#=GF R2R circle_nuc #:97 rgb:254,217,118"                                                                                                                                                          
+[25] "#=GF R2R SetDrawingParam nucShrinkWithCircleNuc 1 pairBondScaleWithCircleNuc 1"                                                                                                                    
+[26] "#=GF R2R tick_label_regular_numbering 1 10 firstNucNum 1"                                                                                                                                          
+[27] "#=GF R2R place_explicit A A-- 45 1 0 0 0 90 f"                                                                                                                                                     
+[28] "#=GF R2R nuc_color #:106 rgb:255,255,255"                                                                                                                                                          
+[29] "#=GF R2R nuc_color #:107 rgb:255,255,255"                                                                                                                                                          
+[30] "#=GF R2R nuc_color #:108 rgb:255,255,255"                                                                                                                                                          
+[31] "#=GF R2R nuc_color #:109 rgb:255,255,255"                                                                                                                                                          
+[32] "#=GF R2R nuc_color #:110 rgb:255,255,255"                                                                                                                                                          
+[33] "#=GF R2R nuc_color #:111 rgb:255,255,255"                                                                                                                                                          
+[34] "#=GF R2R nuc_color #:112 rgb:255,255,255"                                                                                                                                                          
+[35] "#=GF R2R nuc_color #:113 rgb:255,255,255"                                                                                                                                                          
+[36] "#=GF R2R nuc_color #:114 rgb:255,255,255"                                                                                                                                                          
+[37] "#=GF R2R nuc_color #:115 rgb:255,255,255"                                                                                                                                                          
+[38] "#=GF R2R nuc_color #:124 rgb:255,255,255"                                                                                                                                                          
+[39] "#=GF R2R nuc_color #:162 rgb:255,255,255"                                                                                                                                                          
+[40] "#=GF R2R nuc_color #:163 rgb:255,255,255"                                                                                                                                                          
+[41] "#=GF R2R nuc_color #:164 rgb:255,255,255"                                                                                                                                                          
+[42] "#=GF R2R nuc_color #:165 rgb:255,255,255"                                                                                                                                                          
+[43] "//"
+```
+
+### The grey letters editor will print the lines for the new stockholm file in your R console. Note that lines 28 to 42, are showing that the specified nucleotides will be colored white (RGB 225, 225, 225).
+
+### Likewise, regions where no data is availible can be set to grey using the default settings of the grey letters editor:
+
+```{r}
+>r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides =c(1:30, 99:106, 117:124, 126:162, 167:176))
+```
+
+### This will have the following effect:
+
+![Grey_editor_effects](https://user-images.githubusercontent.com/63312483/111522488-bfbdd080-8730-11eb-98c4-73d79b19881d.png)
+
+### Minor improvements to this final figure can be achieved by work up in a drawing program like Adobe Illustrator.
+
+# 7. Drawing psuedoknots
+
+###
 
