@@ -4,15 +4,15 @@
 ## Authors: Jacob P. Sieg, Peter C. Forstmeier, and Philip C. Bevilacqua
 ## Why use R2easyR?
 
-### Manually drawing experimental RNA reactivity data as colors on a secondary structure is time consuming and error prone. R2easyR, when used with the drawing program R2R, makes processing reactivity data, and drawing the reactivity on a secondary structure much easier. With a small amount of workup in a drawing program, the output of the mostly automated R2easyR/R2R pipline produces publication-ready figures rapidly.
+### Manually drawing experimental RNA reactivity data as colors on a secondary structure is time consuming and error prone. R2easyR, when used with the drawing program R2R, makes processing reactivity data, and drawing the reactivity on a secondary structure much easier. With a small amount of workup in a drawing program, the output of the mostly automated R2easyR/R2R pipeline produces publication-ready figures rapidly.
  
-### Acknowledgement: This work is supported by National Institutes of Health Grant R35-GM127064 to PCB.
+### Acknowledgment: This work is supported by National Institutes of Health Grant R35-GM127064 to PCB.
 
 ## Gallery of examples
 
 ![R2easyR gallery](https://user-images.githubusercontent.com/63312483/96524425-3ae48e80-1246-11eb-9240-94b50aa1b3ec.png)
 
-### The R2easyR package allows you to programatically convert experimental reactivity data into input files for R2R. R2R (https://sourceforge.net/projects/weinberg-r2r/) is fantastic software for drawing RNA secondary structures. R2R structures are uniform, making secondary structures drawn with R2R intuitive and publication ready. Moreover, R2R excels at displaying conservation information for RNA motifs, the primary purpose of R2R. Unfortunately, R2R contains fewer options for drawing experimental reactivity data on RNA secondary structures. While all the code R2R needs to map continuous reactivity data to colors on a secondary structure is present, R2R does not have good programatic options for supplying drawing instructions for reactivity data. Thus, R2easyR is designed to link reactivity data and the R2R syntax. R2easyR is a toolbox of R commands that integrate common RNA-lab data formats with appropriate color palettes, and write files that R2R uses to color nucleotides on secondary structuree. This approach is trivial for short RNA (<100N), and reasonably achievable for long RNA (100–3000 N).
+### The R2easyR package allows you to programmatically convert experimental reactivity data into input files for R2R. R2R (https://sourceforge.net/projects/weinberg-r2r/) is fantastic software for drawing RNA secondary structures. R2R structures are uniform, making secondary structures drawn with R2R intuitive and publication ready. Moreover, R2R excels at displaying conservation information for RNA motifs, the primary purpose of R2R. Unfortunately, R2R contains fewer options for drawing experimental reactivity data on RNA secondary structures. While all the code R2R needs to map continuous reactivity data to colors on a secondary structure is present, R2R does not have good programmatic options for supplying drawing instructions for reactivity data. Thus, R2easyR is designed to link reactivity data and the R2R syntax. R2easyR is a toolbox of R commands that integrate common RNA-lab data formats with appropriate color palettes, and write files that R2R uses to color nucleotides on secondary structure. This approach is trivial for short RNA (<100N), and reasonably achievable for long RNA (100–3000 N).
 
 ## Overview
 
@@ -22,7 +22,7 @@
 ![Figure_1](https://user-images.githubusercontent.com/63312483/96525110-1d182900-1248-11eb-8b60-af187eb1fdb6.png)
 
 
-### The four core R2easyR functions can be used in a R script to generate generate a single RNA secondary structure in a couple minutes starting with a .csv file (Video turotial 1) or a .ct file (Video tutorial 2). Alternatively, if you are good at R scripting, one can run the four core R2easyR on a loop to print RNA secondary structures depictions in bulk. Two such bulk structure printers are built into R2easyR. The first is called "ry.tRNA" and maps reactivity data to near-"cloverleaf" tRNA structures in bulk starting with .ct and .shape formated secondary structure/reactivity data. The second, called "r2easyR.go_fast" maps reactivity data to any RNA secondary structure in bulk starting with .ct and .shape formated secondary structure/reactivity data (Video tutorial 3).
+### The four core R2easyR functions can be used in a R script to generate generate a single RNA secondary structure in a couple minutes starting with a .csv file (Video turotial 1) or a .ct file (Video tutorial 2). Alternatively, if you are good at R scripting, one can run the four core R2easyR on a loop to print RNA secondary structures depictions in bulk. Two such bulk structure printers are built into R2easyR. The first is called "ry.tRNA" and maps reactivity data to near-"cloverleaf" tRNA structures in bulk starting with .ct and .shape formatted secondary structure/reactivity data. The second, called "r2easyR.go_fast" maps reactivity data to any RNA secondary structure in bulk starting with .ct and .shape formatted secondary structure/reactivity data (Video tutorial 3).
 
 ## Video tutorials
 
@@ -163,9 +163,9 @@ https://youtu.be/SO_8z9tvXK4
 
 ## 2.3 Loading in reactivity data from “.react” and ".shape" files and placing reactivity data into a data frame
 
-### StructureFold2 (https://github.com/StructureFold2/StructureFold2) formats reactivity data in “.react” files. R2easyR contains a function called “read.react” that reads reactivity data into a R list that is named by the RNA. Likwise, ShapeMapper (https://weekslab.com/software/) formats reactivity data in “.shape” files. R2easyR contains a function called “read.shape” that reads reactivity data into R. Reactivity data is easily placed into a data frame after it is read into R using "read.react" or "read.shape".
+### StructureFold2 (https://github.com/StructureFold2/StructureFold2) formats reactivity data in “.react” files. R2easyR contains a function called “read.react” that reads reactivity data into a R list that is named by the RNA. Likewise, ShapeMapper (https://weekslab.com/software/) formats reactivity data in “.shape” files. R2easyR contains a function called “read.shape” that reads reactivity data into R. Reactivity data is easily placed into a data frame after it is read into R using "read.react" or "read.shape".
 
-### TO read in data, simply type:
+### To read in data, simply type:
 
 ```{r}
 >Reactivity <- read.shape("file_name.ct")
@@ -210,7 +210,7 @@ https://youtu.be/SO_8z9tvXK4
 [25] "#EF3B2C" "#EF3B2C" "#EF3B2C" "#EF3B2C" "#EF3B2C" "#CB181D" "#CB181D" "#CB181D" "#CB181D" "#CB181D" "#CB181D"
 ```
 
-### A PDF depiction of all 59 palettes made by “r2easyR.pallets” is written in your working directory when you run “r2easyR.pallettes”, to help you choose a palette that works for your application. ".c" palettes like "Reds.C" are recomended for coloring reactivity data as circles behind nucleotides because they avoid very dark shades that would obscure the nucleotide letter. ".l" palettes are recomended for coloring reactivity data as the color of the nucleotide letter because they avoid light shades that would be hard to see against a white background.
+### A PDF depiction of all 59 palettes made by “r2easyR.pallets” is written in your working directory when you run “r2easyR.pallettes”, to help you choose a palette that works for your application. ".c" palettes like "Reds.C" are recommended for coloring reactivity data as circles behind nucleotides because they avoid very dark shades that would obscure the nucleotide letter. ".l" palettes are recommended for coloring reactivity data as the color of the nucleotide letter because they avoid light shades that would be hard to see against a white background.
 
 ![Legend](https://user-images.githubusercontent.com/63312483/104636874-0419eb00-5672-11eb-8c24-85ac1107d12c.png)
 
@@ -272,7 +272,7 @@ head(df)
 
 ## 4.3 Using a reactivity threshold to remove low reactivity data that cause clutter
 
-### Low reactivity data that is almost 0 can make a RNA secondary structure look very cluttered, especially if you have quantified a gel becuase every nucleotide will have some baseline level of reactivity, which can make the resulting secondary structure look cluttered. “r2easyR.color” has an argument called “abs_reactivity_threshold” that will have “r2easyR.color” treat any reactivity data below this threshold like there is no data presenta, so that it does not clutter up the figure. For example:
+### Low reactivity data that is almost 0 can make a RNA secondary structure look very cluttered, especially if you have quantified a gel because every nucleotide will have some baseline level of reactivity, which can make the resulting secondary structure look cluttered. “r2easyR.color” has an argument called “abs_reactivity_threshold” that will have “r2easyR.color” treat any reactivity data below this threshold like there is no data present, so that it does not clutter up the figure. For example:
 
 ```{r}
 df <- r2easyR.color(df,
@@ -292,7 +292,7 @@ head(df)
 
 ## 4.4 Specifying a manual scale
 
-### A "r2easyR.color" argument called "manual.scale" can be used to specify the scale that "r2easyR.color" should map reactivity data too. "manual.scale" is useful in two situations. The first is when you want to map reactivity to more than one secondary sctructure using the same scale. The second is when one nucleotide is much more reactive than the rest of the nucleotides in the data set, so that reactivity of most of the nucleotides are bleached out by the highly reactive nucleotide in the final secondary structure. In the second case, you can set the manual scale so that it fits the more numerous less reactive data and maps the extreamly reactive nucleotide to the strongest color in the palette. Setting a manual scale is simple:
+### A "r2easyR.color" argument called "manual.scale" can be used to specify the scale that "r2easyR.color" should map reactivity data too. "manual.scale" is useful in two situations. The first is when you want to map reactivity to more than one secondary structure using the same scale. The second is when one nucleotide is much more reactive than the rest of the nucleotides in the data set, so that reactivity of most of the nucleotides are bleached out by the highly reactive nucleotide in the final secondary structure. In the second case, you can set the manual scale so that it fits the more numerous less reactive data and maps the extremly reactive nucleotide to the strongest color in the palette. Setting a manual scale is simple:
 
 ```{r}
 >df <- r2easyR.color(df,
@@ -350,17 +350,17 @@ $r2r --disable-usage-warning Example.r2r_meta Example.pdf
 
 ![Example](https://user-images.githubusercontent.com/63312483/104652988-e9527100-5687-11eb-801b-328476a69c2d.png)
 
-# 6. Programatic customizations in R2easyR
+# 6. Programmatic customization in R2easyR
 
-### The default layout provided by R2R may not be perfect, where stems are clashing and falling in on themselves. For large structures, this can look like a pile of spagetti. R2R has place explicit commands that allow you to customize a layout, but these can be tricky to learn and implement. Likewise, you may want to have different regions of the RNA have different nucleotide colors for a number of reasons. The most common reason is because you are trying to draw the interaction of two different RNA, or parts of an RNA that are very far apart. The easy way to handle this is to add some filler sequence, for example a string of Us, then have R2R color them white so that they disapear. Another common reason is because no data is availible for a certain region, and you want it to be grey. This section will introduce a functions that edit the R2R stockholm files to optimize the stem layouts and color large swaths of nucleotides.
+### The default layout provided by R2R may not be perfect, where stems are clashing and falling in on themselves. For large structures, this can look like a pile of spaghetti. R2R has place explicit commands that allow you to customize a layout, but these can be tricky to learn and implement. Likewise, you may want to have different regions of the RNA have different nucleotide colors for a number of reasons. The most common reason is because you are trying to draw the interaction of two different RNA, or parts of an RNA that are very far apart. The easy way to handle this is to add some filler sequence, for example a string of Us, then have R2R color them white so that they disappear. Another common reason is because no data is available for a certain region, and you want it to be grey. This section will introduce a functions that edit the R2R stockholm files to optimize the stem layouts and color large swaths of nucleotides.
 
-## 6.1 Optomized stem layouts in R2easyR
+## 6.1 Optimized stem layouts in R2easyR
 
-### A commen customization to figures produced by R2R is using place explicit commands to flip adjacent helices across the line of the backbone in order to keep helices that are close together from clashing in 2D space. R2easyR contains a built in stem editor called "r2easyR.stem_editor" that will write the place explicit commands for you, resulting in a more optimum layout for most RNA that are less than 200 nucleotides long. As an example, see this depiction of part of the E. coli 16S-rRNA:
+### A common customization to figures produced by R2R is using place explicit commands to flip adjacent helices across the line of the backbone in order to keep helices that are close together from clashing in 2D space. R2easyR contains a built in stem editor called "r2easyR.stem_editor" that will write the place explicit commands for you, resulting in a more optimum layout for most RNA that are less than 200 nucleotides long. As an example, see this depiction of part of the E. coli 16S-rRNA:
 
 ![Stem_editor_effects](https://user-images.githubusercontent.com/63312483/111514682-576af100-8728-11eb-9455-a8c00e1264f7.png)
 
-### The "r2easyR.stem_editor" edits the stockholm file directly, meaning that you should apply the stem editor after you have written R2R imputs. For, example:
+### The "r2easyR.stem_editor" edits the stockholm file directly, meaning that you should apply the stem editor after you have written R2R inputs. For, example:
 
 ```{r}
 >list.files()
@@ -400,13 +400,13 @@ $r2r --disable-usage-warning Example.r2r_meta Example.pdf
 
 ## 6.2 Coloring nucleotides in a structure
 
-### The "r2easyR.grey_letters_editor" allows you to specify the color for a large swath of nucleotides and runs on a syntax and functionallity similar to the "R2easyR.stem_editor". This section will cover two common applications- removing intervening artificial filler regions in a secondary structure and coloring nucleotides where no data is availible grey.
+### The "r2easyR.grey_letters_editor" allows you to specify the color for a large swath of nucleotides and runs on a syntax and functionality similar to the "R2easyR.stem_editor". This section will cover two common applications- removing intervening artificial filler regions in a secondary structure and coloring nucleotides where no data is available grey.
 
-### It is often informative to map reactivity data from a small portion of a large RNA onto a secondary structure. IIt is not necessary to draw the whole RNA, just a small subset. In the case of 16S-rRNA, the 5-prime region base pairs to nucleotides 500 residues ustream, and it is unnecessary and difficult to draw the intervening 300 nucleotide region. In this case, I like to replace the intervening region with a short string of Us in the original .csv file to simplify drawing. These Us can be reomoved by coloring them white using the grey letters editor. For example:
+### It is often informative to map reactivity data from a small portion of a large RNA onto a secondary structure. It is not necessary to draw the whole RNA, just a small subset. In the case of 16S-rRNA, the 5-prime region base pairs to nucleotides 500 residues ustream, and it is unnecessary and difficult to draw the intervening 300 nucleotide region. In this case, I like to replace the intervening region with a short string of Us in the original .csv file to simplify drawing. These Us can be removed by coloring them white using the grey letters editor. For example:
 
 ![White_editor_effects](https://user-images.githubusercontent.com/63312483/111521923-17a80780-8730-11eb-84dc-7f6101d3fdc8.png)
 
-### Once agian, the grey letters editor is applied directly to the R2R.sto. The second argument specifies what regions should be colored and the third argument specifies the color.
+### Once again, the grey letters editor is applied directly to the R2R.sto. The second argument specifies what regions should be colored and the third argument specifies the color.
 
 ```{r}
 r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 163:166), "white")
@@ -457,7 +457,7 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 ### The grey letters editor will print the lines for the new stockholm file in your R console. Note that lines 28 to 42, are showing that the specified nucleotides will be colored white (RGB 225, 225, 225).
 
-### Likewise, regions where no data is availible can be set to grey using the default settings of the grey letters editor:
+### Likewise, regions where no data is available can be set to grey using the default settings of the grey letters editor:
 
 ```{r}
 >r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides =c(1:30, 99:106, 117:124, 126:162, 167:176))
@@ -471,7 +471,7 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 # 7. Drawing psuedoknots
 
-### Drawing a psuedoknot is a perineal problem for depicting secondary structure. A good strategy is to draw the secondary structure of the RNA in the absence of psuedoknots and label those psuedoknots after the core R2R.sto file is written. R2easyR contains a function called "r2easyR.pknot_drawer" which will edit the R2R.sto file to label certain sequences as a psuedoknot.
+### Drawing a psuedoknot is a common problem for depicting secondary structure. A good strategy is to draw the secondary structure of the RNA in the absence of psuedoknots and label those psuedoknots after the core R2R.sto file is written. R2easyR contains a function called "r2easyR.pknot_drawer" which will edit the R2R.sto file to label certain sequences as a psuedoknot.
 
 ### For example, first read in a psuedonot secondary structure as a text file with CT or dotbracket formatted secondary structure information as you would for a normal secondary structure. Then find your psuedoknotted sequence. In the case of our sample RNA, the psuedoknot occurs at nucleotides 14 to 18 and nucleotides 64 to 68.
 
@@ -509,7 +509,7 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 68 68          U  67   0 14 68          .
 ```
 
-### The R2R imput files can be written and edited normally.
+### The R2R input files can be written and edited normally.
 
 ```{r}
 >r2easyR.write("demo", df)
