@@ -469,11 +469,11 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 ### Minor improvements to this final figure can be achieved by work up in a drawing program like Adobe Illustrator.
 
-# 7. Drawing psuedoknots
+# 7. Drawing pseudoknots
 
-### Drawing a psuedoknot is a common problem for depicting secondary structure. A good strategy is to draw the secondary structure of the RNA in the absence of psuedoknots and label those psuedoknots after the core R2R.sto file is written. R2easyR contains a function called "r2easyR.pknot_drawer" which will edit the R2R.sto file to label certain sequences as a psuedoknot.
+### Drawing a pseudoknot is a common problem for depicting secondary structure. A good strategy is to draw the secondary structure of the RNA in the absence of pseudoknots and label those pseudoknots after the core R2R.sto file is written. R2easyR contains a function called "r2easyR.pknot_drawer" which will edit the R2R.sto file to label certain sequences as a pseudoknot.
 
-### For example, first read in a psuedonot secondary structure as a text file with CT or dotbracket formatted secondary structure information as you would for a normal secondary structure. Then find your psuedoknotted sequence. In the case of our sample RNA, the psuedoknot occurs at nucleotides 14 to 18 and nucleotides 64 to 68.
+### For example, first read in a psuedonot secondary structure as a text file with CT or dotbracket formatted secondary structure information as you would for a normal secondary structure. Then find your pseudoknotted sequence. In the case of our sample RNA, the pseudoknot occurs at nucleotides 14 to 18 and nucleotides 64 to 68.
 
 ```{r}
 >df[c(14:18, 64:68),]
@@ -490,7 +490,7 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 68 68          U  67   0 14 68          >
 ```
 
-### Remove the psuedoknot by changing the Dotbracket column so that no secondary structure is specified at the psuedoknot sequence.
+### Remove the pseudoknot by changing the Dotbracket column so that no secondary structure is specified at the pseudoknot sequence.
 
 ```{r}
 >pknot <- c(14:18, 64:68)
@@ -516,7 +516,7 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 >r2easyR.stem_editor("demo.sto")
 ```
 
-### Running R2R on the inputs you just generated will result in a secondary structure with no psuedoknot specified. You can add the psuedoknot label with the psuedoknot drawer, which edits the R2R.sto file directly. The stem editor will print the lines it edited in the console.
+### Running R2R on the inputs you just generated will result in a secondary structure with no pseudoknot specified. You can add the pseudoknot label with the pseudoknot drawer, which edits the R2R.sto file directly. The stem editor will print the lines it edited in the console.
 
 ```{r}
 >r2easyR.pknot_drawer(pknot = pknot,  R2R.sto = "demo.sto")
@@ -531,7 +531,7 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 ```
 ![Pknot_drawer](https://user-images.githubusercontent.com/63312483/111663673-6bc1f300-87e7-11eb-90c9-d4a4b55ece16.png)
 
-### You can add a second psuedoknot to the drawing by rerunning the psuedoknot labeler on a new sequence.
+### You can add a second pseudoknot to the drawing by rerunning the pseudoknot labeler on a new sequence.
 
 ```{r}
 >r2easyR.pknot_drawer(pknot = c(46:47, 61:62),  R2R.sto = "demo.sto")
@@ -546,6 +546,6 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
   
 ```
 
-### Note: the psuedoknot labeler will count how many other psuedoknots have been added by the labler and automatically update the index. For example the second psuedoknot we labeled is called pk2.
+### Note: the pseudoknot labeler will count how many other pseudoknots have been added by the labler and automatically update the index. For example the second pseudoknot we labeled is called pk2.
 
 
