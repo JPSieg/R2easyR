@@ -516,7 +516,7 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 >r2easyR.stem_editor("demo.sto")
 ```
 
-### Running R2R on the inputs you just generated will result in a secondary structure with no psuedoknot specified. You can add the psuedoknot with the psuedoknot drawer, which edits the R2R.sto file directly. The stem editor will print the lines it edited in the console.
+### Running R2R on the inputs you just generated will result in a secondary structure with no psuedoknot specified. You can add the psuedoknot label with the psuedoknot drawer, which edits the R2R.sto file directly. The stem editor will print the lines it edited in the console.
 
 ```{r}
 >r2easyR.pknot_drawer(pknot = pknot,  R2R.sto = "demo.sto")
