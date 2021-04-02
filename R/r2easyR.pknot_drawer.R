@@ -26,7 +26,7 @@ r2easyR.pknot_drawer = function(R2R.sto,
     for (m in 1:length(pknot[[l]])){
       #print(m)
       if (dot.bracket.line[pknot[[l]][m]] != "."){
-        print(paste("Warning: The residue at position", m, "already has a secondary structure specified, which could result in innaccurate secondary structure depictions. Make sure you have removed pknots from the dotbracket column of the data frame before weiting the R2R stockholm files"))
+        print(paste("Warning: The residue at position", m, "already has a secondary structure specified, which could result in innaccurate secondary structure depictions. Make sure you have removed pknots from the dotbracket column of the data frame before writing the R2R stockholm files"))
       }
     }
 
