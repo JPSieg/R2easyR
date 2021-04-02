@@ -19,6 +19,17 @@ r2easyR.pknot_drawer = function(R2R.sto,
 
     lines <- lines[1:(length(lines)-1)]
 
+    #Check to see if the pknot region is removed from the dotbracket secondary structure
+
+    dot.bracket.line <- strsplit(strsplit(lines[3], split = "\t")[[1]][2], split = "")[[1]]
+
+    for (m in 1:length(pknot[[l]])){
+      #print(m)
+      if (dot.bracket.line[pknot[[l]][m]] != "."){
+        print(paste("Warning: The residue at position", m, "already has a secondary structure specified, which could result in innaccurate secondary structure depictions. Make sure you have removed pknots from the dotbracket column of the data frame before weiting the R2R stockholm files"))
+      }
+    }
+
     #index of labels to use in the R2R label line
 
     label.index <- c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "x", "t", "u", "v", "w", "x", "y", "z")
