@@ -550,5 +550,212 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 ### Note: the pseudoknot labeler will count how many other pseudoknots have been added by the labler and automatically update the index. For example the second pseudoknot we labeled is called pk2.
 
-## 7.2 Pseudoknots are troublesome for structure drawing programs because their non-nested nature fools the drawing program into pairing the incorrect bases. One way to deal with this is to eliminate pseudoknots in the dot bracket specified secondary structure line, as outlined in section 7.1. Alternitively, Peter C. Forstmeier has written some creative code to identify pseudoknoted residues from a connectivity table (CT) and compiled it into the "r2easyR.pk_finder" algorithm. The pk finder finds nested pseudonotted basepairs in a CT, in relation to the dominant (longest) secondary structure elements. To implement the pk finder, first read the CT into a R dataframe using "read.ct" for RNAStructure formatted connectivity files or generic R text file parsers like read.ct. The data frame should have the following column names in order for the pk finder to recognize the data structure:
+## 7.2 Using an automated pk finder to draw pseodoknots from a connectivity table (CT)
 
+### Pseudoknots are troublesome for structure drawing programs because their non-nested nature fools the drawing program into pairing the incorrect bases. One way to deal with this is to eliminate pseudoknots in the dot bracket specified secondary structure line, as outlined in section 7.1. Alternatively, Peter C. Forstmeier has written some creative code to identify pseudoknoted residues from a connectivity table (CT) and compiled it into the "r2easyR.pk_finder" algorithm. The pk finder finds nested pseudonotted basepairs in a CT, in relation to the dominant (longest) secondary structure elements. To implement the pk finder, first read the CT into a R dataframe using "read.ct" for RNAStructure formatted connectivity files or generic R text file parsers like read.ct. The data frame should have the following column names in order for the pk finder to recognize the data structure:
+
+```{r}
+>df <- read.ct("PKB335(1).ct")
+>head(df)
+  N Nucleotide N-1 N+1 BP N
+1 1          G   0   2 36 1
+2 2          G   1   3 35 2
+3 3          U   2   4 34 3
+4 4          U   3   5 33 4
+5 5          U   4   6 32 5
+6 6          G   5   7 31 6
+```
+
+### Then you can use the pk finder to identify pknots from this connectivity table.
+
+```{r}
+>list.pk <- r2easyR.pk_finder(df)
+[[1]]
+[1]  10  11 103 104
+
+[[2]]
+[1]  13  14  15  16  99 100 101 102
+
+[[3]]
+[1] 21 22 37 38
+```
+
+### The pk finder found 3 psuedoknots in this connectivity table. Note the output of the pk finder is a list of R objects that can be passed to other functions in R2easyR. The first element is a data frame with the pknots removed from the dot bracket column and can be passed to "r2easyR.write". The second element is a list of pseudoknoted residues and can be passed to "r2easyR.pknot_drawer". To see what is in the list, run:
+
+```{r}
+>list.pk
+$r2easyR.dataframe
+      N Nucleotide N-1 N+1  BP   N Dotbracket
+1     1          G   0   2  36   1          <
+2     2          G   1   3  35   2          <
+3     3          U   2   4  34   3          <
+4     4          U   3   5  33   4          <
+5     5          U   4   6  32   5          <
+6     6          G   5   7  31   6          <
+7     7          C   6   8  30   7          <
+8     8          U   7   9   0   8          .
+9     9          U   8  10   0   9          .
+10   10          G   9  11 104  10          .
+11   11          U  10  12 103  11          .
+12   12          U  11  13   0  12          .
+13   13          G  12  14 102  13          .
+14   14          G  13  15 101  14          .
+15   15          A  14  16 100  15          .
+16   16          U  15  17  99  16          .
+17   17          A  16  18  29  17          <
+18   18          C  17  19  28  18          <
+19   19          C  18  20  27  19          <
+20   20          U  19  21   0  20          .
+21   21          C  20  22  38  21          .
+22   22          C  21  23  37  22          .
+23   23          U  22  24   0  23          .
+24   24          C  23  25   0  24          .
+25   25          G  24  26   0  25          .
+26   26          C  25  27   0  26          .
+27   27          G  26  28  19  27          >
+28   28          G  27  29  18  28          >
+29   29          U  28  30  17  29          >
+30   30          G  29  31   7  30          >
+31   31          C  30  32   6  31          >
+32   32          A  31  33   5  32          >
+33   33          A  32  34   4  33          >
+34   34          A  33  35   3  34          >
+35   35          C  34  36   2  35          >
+36   36          U  35  37   1  36          >
+37   37          G  36  38  22  37          .
+38   38          G  37  39  21  38          .
+39   39          G  38  40  94  39          <
+40   40          C  39  41  93  40          <
+41   41          A  40  42   0  41          .
+42   42          A  41  43   0  42          .
+43   43          U  42  44  92  43          <
+44   44          G  43  45  91  44          <
+45   45          C  44  46  90  45          <
+46   46          U  45  47  89  46          <
+47   47          G  46  48  88  47          <
+48   48          U  47  49  87  48          <
+49   49          G  48  50  86  49          <
+50   50          C  49  51  85  50          <
+51   51          U  50  52  84  51          <
+52   52          C  51  53   0  52          .
+53   53          C  52  54   0  53          .
+54   54          U  53  55   0  54          .
+55   55          A  54  56   0  55          .
+56   56          C  55  57   0  56          .
+57   57          G  56  58  82  57          <
+58   58          A  57  59  81  58          <
+59   59          C  58  60  80  59          <
+60   60          A  59  61  79  60          <
+61   61          G  60  62  78  61          <
+62   62          G  61  63  76  62          <
+63   63          G  62  64  75  63          <
+64   64          G  63  65   0  64          .
+65   65          A  64  66   0  65          .
+66   66          A  65  67   0  66          .
+67   67          A  66  68   0  67          .
+68   68          U  67  69   0  68          .
+69   69          U  68  70   0  69          .
+70   70          G  69  71   0  70          .
+71   71          G  70  72   0  71          .
+72   72          A  71  73   0  72          .
+73   73          C  72  74   0  73          .
+74   74          A  73  75   0  74          .
+75   75          C  74  76  63  75          >
+76   76          C  75  77  62  76          >
+77   77          A  76  78   0  77          .
+78   78          C  77  79  61  78          >
+79   79          U  78  80  60  79          >
+80   80          G  79  81  59  80          >
+81   81          U  80  82  58  81          >
+82   82          U  81  83  57  82          >
+83   83          A  82  84   0  83          .
+84   84          G  83  85  51  84          >
+85   85          G  84  86  50  85          >
+86   86          C  85  87  49  86          >
+87   87          A  86  88  48  87          >
+88   88          C  87  89  47  88          >
+89   89          A  88  90  46  89          >
+90   90          G  89  91  45  90          >
+91   91          U  90  92  44  91          >
+92   92          A  91  93  43  92          >
+93   93          G  92  94  40  93          >
+94   94          C  93  95  39  94          >
+95   95          C  94  96   0  95          .
+96   96          A  95  97   0  96          .
+97   97          A  96  98   0  97          .
+98   98          A  97  99   0  98          .
+99   99          A  98 100  16  99          .
+100 100          U  99 101  15 100          .
+101 101          C 100 102  14 101          .
+102 102          C 101 103  13 102          .
+103 103          A 102 104  11 103          .
+104 104          C 103   0  10 104          .
+
+$pknot.list
+$pknot.list[[1]]
+[1]  10  11 103 104
+
+$pknot.list[[2]]
+[1]  13  14  15  16  99 100 101 102
+
+$pknot.list[[3]]
+[1] 21 22 37 38
+```
+
+### The R2R inputs can be written using the data frame ($r2easyR.dataframe), then R2R inputs can be edited normally.
+
+```{r}
+>r2easyR.write("demo", list.pk$r2easyR.dataframe)
+>r2easyR.stem_editor("demo.sto")
+```
+
+### Then pknot IDs can be passed to the "r2easyR.pknot_drawer".
+
+```{r}
+>r2easyR.pknot_drawer("demo.sto", list.pk$pknot.list)
+```
+
+### Output R2R meta and Stockholm files can be passed to r2r normally. The result of each step is shown here:
+
+![Add_pknots](https://user-images.githubusercontent.com/63312483/114207490-6c533280-992a-11eb-8368-b86711239f18.png)
+
+# 8. Patching R2R to remove black lines around reactivity circles
+
+### The current version of R2R draws black lines around nucleotide reactivity circles, which do not look crisp. The creator of R2R, Zasha Weinburg, has provided a quick patch to remove the lines around circles. 
+
+### Step 1 In your bash terminal, use “cd” and “ls” to Navigate to the “R2R-1.0.6” folder
+
+### Step 2 Open the RnaDrawer.cpp script in the src folder using the vim text editor
+```{r}
+$vim R2R-1.0.6/src/RnaDrawer.cpp
+```
+
+### Step 3 Jump to line 1595 in vim
+
+```{r}
+1595 [shift] + g
+```
+
+### Step 4 Press [i] to go into editing mode. Delete the lines:
+
+```{r}
+pdf.SetLineWidth(posInfoVector[i].circleNucPenWidth);
+pdf.EdgeCircle(AdobeGraphics::Color_Black(),posInfoVector[i].pos,radius);
+```
+
+### Step 5 Press [Esc] to leave editing mode
+
+### Step 6 Save the changes and quit vim by typing:
+
+```{r}
+:wq
+```
+
+### Step 7 Remake R2R and Reinstall R2R
+
+```{r}
+$make
+$make install
+```
+
+### I will edit R2easyR to custom circle lines when a new version of R2R is released that supports this functionality. Until then, this patch will do.
