@@ -471,6 +471,8 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 # 7. Drawing pseudoknots
 
+## 7.1 Removing then annotating a pseudoknot manually
+
 ### Drawing a pseudoknot is a common problem for depicting secondary structure. A good strategy is to draw the secondary structure of the RNA in the absence of pseudoknots and label those pseudoknots after the core R2R.sto file is written. R2easyR contains a function called "r2easyR.pknot_drawer" which will edit the R2R.sto file to label certain sequences as a pseudoknot.
 
 ### For example, first read in a psuedonot secondary structure as a text file with CT or dotbracket formatted secondary structure information as you would for a normal secondary structure. Then find your pseudoknotted sequence. In the case of our sample RNA, the pseudoknot occurs at nucleotides 14 to 18 and nucleotides 64 to 68.
@@ -548,4 +550,5 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 ### Note: the pseudoknot labeler will count how many other pseudoknots have been added by the labler and automatically update the index. For example the second pseudoknot we labeled is called pk2.
 
+## 7.2 Pseudoknots are troublesome for structure drawing programs because their non-nested nature fools the drawing program into pairing the incorrect bases. One way to deal with this is to eliminate pseudoknots in the dot bracket specified secondary structure line, as outlined in section 7.1. Alternitively, Peter C. Forstmeier has written some creative code to identify pseudoknoted residues from a connectivity table (CT) and compiled it into the "r2easyR.pk_finder" algorithm. The pk finder finds nested pseudonotted basepairs in a CT, in relation to the dominant (longest) secondary structure elements. To implement the pk finder, first read the CT into a R dataframe using "read.ct" for RNAStructure formatted connectivity files or generic R text file parsers like read.ct. The data frame should have the following column names in order for the pk finder to recognize the data structure:
 
