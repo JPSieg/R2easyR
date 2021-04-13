@@ -5,6 +5,8 @@
 ## Why use R2easyR?
 
 ### Manually drawing experimental RNA reactivity data as colors on a secondary structure is time consuming and error prone. R2easyR, when used with the drawing program R2R, makes processing reactivity data, and drawing the reactivity on a secondary structure much easier. With a small amount of workup in a drawing program, the output of the mostly automated R2easyR/R2R pipeline produces publication-ready figures rapidly.
+
+### Please cite: [![DOI](https://zenodo.org/badge/259036141.svg)](https://zenodo.org/badge/latestdoi/259036141)
  
 ### Acknowledgment: This work is supported by National Institutes of Health Grant R35-GM127064 to PCB.
 
