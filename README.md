@@ -475,7 +475,7 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 ### Drawing a pseudoknot is a common problem for depicting secondary structure. A good strategy is to draw the secondary structure of the RNA in the absence of pseudoknots and label those pseudoknots after the core R2R.sto file is written. R2easyR contains a function called "r2easyR.pknot_drawer" which will edit the R2R.sto file to label certain sequences as a pseudoknot.
 
-### For example, first read in a psuedonot secondary structure as a text file with CT or dotbracket formatted secondary structure information as you would for a normal secondary structure. Then find your pseudoknotted sequence. In the case of our sample RNA, the pseudoknot occurs at nucleotides 14 to 18 and nucleotides 64 to 68.
+### For example, first read in a pseudoknotted secondary structure as a text file with CT or dotbracket formatted secondary structure information as you would for a normal secondary structure. Then find your pseudoknotted sequence. In the case of our sample RNA, the pseudoknot occurs at nucleotides 14 to 18 and nucleotides 64 to 68.
 
 ```{r}
 >df[c(14:18, 64:68),]
@@ -552,7 +552,7 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 ## 7.2 Using an automated pk finder to draw pseodoknots from a connectivity table (CT)
 
-### Pseudoknots are troublesome for structure drawing programs because their non-nested nature fools the drawing program into pairing the incorrect bases. One way to deal with this is to eliminate pseudoknots in the dot bracket specified secondary structure line, as outlined in section 7.1. Alternatively, Peter C. Forstmeier has written some creative code to identify pseudoknoted residues from a connectivity table (CT) and compiled it into the "r2easyR.pk_finder" algorithm. The pk finder finds nested pseudonotted basepairs in a CT, in relation to the dominant (longest) secondary structure elements. To implement the pk finder, first read the CT into a R dataframe using "read.ct" for RNAStructure formatted connectivity files or generic R text file parsers like read.ct. The data frame should have the following column names in order for the pk finder to recognize the data structure:
+### Pseudoknots are troublesome for structure drawing programs because their non-nested nature fools the drawing program into pairing the incorrect bases. One way to deal with this is to eliminate pseudoknots in the dot bracket specified secondary structure line, as outlined in section 7.1. Alternatively, Peter C. Forstmeier has written some creative code to identify pseudoknotted residues from a connectivity table (CT) and compiled it into the "r2easyR.pk_finder" algorithm. The pk finder analyzes a CT and identifies nests of base pairs that are non-nested (pseudoknotted) in relation to the dominant (longest) secondary structure elements. To implement the pk finder, first read the CT into a R dataframe using "read.ct" for RNAStructure formatted connectivity files or generic R text file parsers like read.ct. The data frame should have the following column names in order for the pk finder to recognize the data structure:
 
 ```{r}
 >df <- read.ct("PKB335(1).ct")
@@ -580,7 +580,7 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 [1] 21 22 37 38
 ```
 
-### The pk finder found 3 psuedoknots in this connectivity table. Note the output of the pk finder is a list of R objects that can be passed to other functions in R2easyR. The first element is a data frame with the pknots removed from the dot bracket column and can be passed to "r2easyR.write". The second element is a list of pseudoknoted residues and can be passed to "r2easyR.pknot_drawer". To see what is in the list, run:
+### The pk finder found 3 pseudoknots in this connectivity table. Note the output of the pk finder is a list of R objects that can be passed to other functions in R2easyR. The first element is a data frame with the pknots removed from the dot bracket column and can be passed to "r2easyR.write". The second element is a list of pseudoknotted residues and can be passed to "r2easyR.pknot_drawer". To see what is in the list, run:
 
 ```{r}
 >list.pk
@@ -599,97 +599,6 @@ $r2easyR.dataframe
 11   11          U  10  12 103  11          .
 12   12          U  11  13   0  12          .
 13   13          G  12  14 102  13          .
-14   14          G  13  15 101  14          .
-15   15          A  14  16 100  15          .
-16   16          U  15  17  99  16          .
-17   17          A  16  18  29  17          <
-18   18          C  17  19  28  18          <
-19   19          C  18  20  27  19          <
-20   20          U  19  21   0  20          .
-21   21          C  20  22  38  21          .
-22   22          C  21  23  37  22          .
-23   23          U  22  24   0  23          .
-24   24          C  23  25   0  24          .
-25   25          G  24  26   0  25          .
-26   26          C  25  27   0  26          .
-27   27          G  26  28  19  27          >
-28   28          G  27  29  18  28          >
-29   29          U  28  30  17  29          >
-30   30          G  29  31   7  30          >
-31   31          C  30  32   6  31          >
-32   32          A  31  33   5  32          >
-33   33          A  32  34   4  33          >
-34   34          A  33  35   3  34          >
-35   35          C  34  36   2  35          >
-36   36          U  35  37   1  36          >
-37   37          G  36  38  22  37          .
-38   38          G  37  39  21  38          .
-39   39          G  38  40  94  39          <
-40   40          C  39  41  93  40          <
-41   41          A  40  42   0  41          .
-42   42          A  41  43   0  42          .
-43   43          U  42  44  92  43          <
-44   44          G  43  45  91  44          <
-45   45          C  44  46  90  45          <
-46   46          U  45  47  89  46          <
-47   47          G  46  48  88  47          <
-48   48          U  47  49  87  48          <
-49   49          G  48  50  86  49          <
-50   50          C  49  51  85  50          <
-51   51          U  50  52  84  51          <
-52   52          C  51  53   0  52          .
-53   53          C  52  54   0  53          .
-54   54          U  53  55   0  54          .
-55   55          A  54  56   0  55          .
-56   56          C  55  57   0  56          .
-57   57          G  56  58  82  57          <
-58   58          A  57  59  81  58          <
-59   59          C  58  60  80  59          <
-60   60          A  59  61  79  60          <
-61   61          G  60  62  78  61          <
-62   62          G  61  63  76  62          <
-63   63          G  62  64  75  63          <
-64   64          G  63  65   0  64          .
-65   65          A  64  66   0  65          .
-66   66          A  65  67   0  66          .
-67   67          A  66  68   0  67          .
-68   68          U  67  69   0  68          .
-69   69          U  68  70   0  69          .
-70   70          G  69  71   0  70          .
-71   71          G  70  72   0  71          .
-72   72          A  71  73   0  72          .
-73   73          C  72  74   0  73          .
-74   74          A  73  75   0  74          .
-75   75          C  74  76  63  75          >
-76   76          C  75  77  62  76          >
-77   77          A  76  78   0  77          .
-78   78          C  77  79  61  78          >
-79   79          U  78  80  60  79          >
-80   80          G  79  81  59  80          >
-81   81          U  80  82  58  81          >
-82   82          U  81  83  57  82          >
-83   83          A  82  84   0  83          .
-84   84          G  83  85  51  84          >
-85   85          G  84  86  50  85          >
-86   86          C  85  87  49  86          >
-87   87          A  86  88  48  87          >
-88   88          C  87  89  47  88          >
-89   89          A  88  90  46  89          >
-90   90          G  89  91  45  90          >
-91   91          U  90  92  44  91          >
-92   92          A  91  93  43  92          >
-93   93          G  92  94  40  93          >
-94   94          C  93  95  39  94          >
-95   95          C  94  96   0  95          .
-96   96          A  95  97   0  96          .
-97   97          A  96  98   0  97          .
-98   98          A  97  99   0  98          .
-99   99          A  98 100  16  99          .
-100 100          U  99 101  15 100          .
-101 101          C 100 102  14 101          .
-102 102          C 101 103  13 102          .
-103 103          A 102 104  11 103          .
-104 104          C 103   0  10 104          .
 
 $pknot.list
 $pknot.list[[1]]
