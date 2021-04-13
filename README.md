@@ -6,7 +6,7 @@
 
 ### Manually drawing experimental RNA reactivity data as colors on a secondary structure is time consuming and error prone. R2easyR, when used with the drawing program R2R, makes processing reactivity data, and drawing the reactivity on a secondary structure much easier. With a small amount of workup in a drawing program, the output of the mostly automated R2easyR/R2R pipeline produces publication-ready figures rapidly.
 
-### Please cite: [![DOI](https://zenodo.org/badge/259036141.svg)](https://zenodo.org/badge/latestdoi/259036141)
+### Cite: Jacob P. Sieg, Peter C. Forstmeier, & Philip C. Bevilacqua. (2021, April 13). JPSieg/R2easyR: R2easyR v1.1 (Version v1.1). Zenodo. http://doi.org/10.5281/zenodo.4683742
  
 ### Acknowledgment: This work is supported by National Institutes of Health Grant R35-GM127064 to PCB.
 
