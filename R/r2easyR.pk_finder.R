@@ -24,6 +24,9 @@ r2easyR.pk_finder = function(ctdata_frame){
 
   already_counted <- c()
 
+  df$N <- as.character(df$N)
+  df$BP <- as.character(df$BP)
+
   #this serves to gather all stems
   for (i in 1:length(df$N)){
     N_i <- as.integer(df$N[i])
@@ -313,7 +316,6 @@ r2easyR.pk_finder = function(ctdata_frame){
   }
   #print(stem)
 
-  print(list_pseudoknot_stems)
 
   #below serves to delete pseudoknotted base pairs from ct data frame
 
@@ -325,6 +327,8 @@ r2easyR.pk_finder = function(ctdata_frame){
   }
 
   output = list(df, list_pseudoknot_stems)
+
+  print(list_pseudoknot_stems)
 
   names(output) = c("r2easyR.dataframe", "pknot.list")
 

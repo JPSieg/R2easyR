@@ -5,6 +5,8 @@
 ## Why use R2easyR?
 
 ### Manually drawing experimental RNA reactivity data as colors on a secondary structure is time consuming and error prone. R2easyR, when used with the drawing program R2R, makes processing reactivity data, and drawing the reactivity on a secondary structure much easier. With a small amount of workup in a drawing program, the output of the mostly automated R2easyR/R2R pipeline produces publication-ready figures rapidly.
+
+### Cite: Jacob P. Sieg, Peter C. Forstmeier, & Philip C. Bevilacqua. (2021, April 13). JPSieg/R2easyR: R2easyR v1.1 (Version v1.1). Zenodo. http://doi.org/10.5281/zenodo.4683742
  
 ### Acknowledgment: This work is supported by National Institutes of Health Grant R35-GM127064 to PCB.
 
@@ -471,9 +473,11 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 # 7. Drawing pseudoknots
 
+## 7.1 Removing then annotating a pseudoknot manually
+
 ### Drawing a pseudoknot is a common problem for depicting secondary structure. A good strategy is to draw the secondary structure of the RNA in the absence of pseudoknots and label those pseudoknots after the core R2R.sto file is written. R2easyR contains a function called "r2easyR.pknot_drawer" which will edit the R2R.sto file to label certain sequences as a pseudoknot.
 
-### For example, first read in a psuedonot secondary structure as a text file with CT or dotbracket formatted secondary structure information as you would for a normal secondary structure. Then find your pseudoknotted sequence. In the case of our sample RNA, the pseudoknot occurs at nucleotides 14 to 18 and nucleotides 64 to 68.
+### For example, first read in a pseudoknotted secondary structure as a text file with CT or dotbracket formatted secondary structure information as you would for a normal secondary structure. Then find your pseudoknotted sequence. In the case of our sample RNA, the pseudoknot occurs at nucleotides 14 to 18 and nucleotides 64 to 68.
 
 ```{r}
 >df[c(14:18, 64:68),]
@@ -548,4 +552,121 @@ r2easyR.grey_letters_editor(R2R.sto = "demo.sto", Nucleotides = c(107:116, 125, 
 
 ### Note: the pseudoknot labeler will count how many other pseudoknots have been added by the labler and automatically update the index. For example the second pseudoknot we labeled is called pk2.
 
+## 7.2 Using an automated pk finder to draw pseodoknots from a connectivity table (CT)
 
+### Pseudoknots are troublesome for structure drawing programs because their non-nested nature fools the drawing program into pairing the incorrect bases. One way to deal with this is to eliminate pseudoknots in the dot bracket specified secondary structure line, as outlined in section 7.1. Alternatively, Peter C. Forstmeier has written some creative code to identify pseudoknotted residues from a connectivity table (CT) and compiled it into the "r2easyR.pk_finder" algorithm. The pk finder analyzes a CT and identifies nests of base pairs that are non-nested (pseudoknotted) in relation to the dominant (longest) secondary structure elements. To implement the pk finder, first read the CT into a R dataframe using "read.ct" for RNAStructure formatted connectivity files or generic R text file parsers like read.ct. The data frame should have the following column names in order for the pk finder to recognize the data structure:
+
+```{r}
+>df <- read.ct("PKB335(1).ct")
+>head(df)
+  N Nucleotide N-1 N+1 BP N
+1 1          G   0   2 36 1
+2 2          G   1   3 35 2
+3 3          U   2   4 34 3
+4 4          U   3   5 33 4
+5 5          U   4   6 32 5
+6 6          G   5   7 31 6
+```
+
+### Then you can use the pk finder to identify pknots from this connectivity table.
+
+```{r}
+>list.pk <- r2easyR.pk_finder(df)
+[[1]]
+[1]  10  11 103 104
+
+[[2]]
+[1]  13  14  15  16  99 100 101 102
+
+[[3]]
+[1] 21 22 37 38
+```
+
+### The pk finder found 3 pseudoknots in this connectivity table. Note the output of the pk finder is a list of R objects that can be passed to other functions in R2easyR. The first element is a data frame with the pknots removed from the dot bracket column and can be passed to "r2easyR.write". The second element is a list of pseudoknotted residues and can be passed to "r2easyR.pknot_drawer". To see what is in the list, run:
+
+```{r}
+>list.pk
+$r2easyR.dataframe
+      N Nucleotide N-1 N+1  BP   N Dotbracket
+1     1          G   0   2  36   1          <
+2     2          G   1   3  35   2          <
+3     3          U   2   4  34   3          <
+4     4          U   3   5  33   4          <
+5     5          U   4   6  32   5          <
+6     6          G   5   7  31   6          <
+7     7          C   6   8  30   7          <
+8     8          U   7   9   0   8          .
+9     9          U   8  10   0   9          .
+10   10          G   9  11 104  10          .
+11   11          U  10  12 103  11          .
+12   12          U  11  13   0  12          .
+13   13          G  12  14 102  13          .
+
+$pknot.list
+$pknot.list[[1]]
+[1]  10  11 103 104
+
+$pknot.list[[2]]
+[1]  13  14  15  16  99 100 101 102
+
+$pknot.list[[3]]
+[1] 21 22 37 38
+```
+
+### The R2R inputs can be written using the data frame ($r2easyR.dataframe), then R2R inputs can be edited normally.
+
+```{r}
+>r2easyR.write("demo", list.pk$r2easyR.dataframe)
+>r2easyR.stem_editor("demo.sto")
+```
+
+### Then pknot IDs can be passed to the "r2easyR.pknot_drawer".
+
+```{r}
+>r2easyR.pknot_drawer("demo.sto", list.pk$pknot.list)
+```
+
+### Output R2R meta and Stockholm files can be passed to r2r normally. The result of each step is shown here:
+
+![Add_pknots](https://user-images.githubusercontent.com/63312483/114207490-6c533280-992a-11eb-8368-b86711239f18.png)
+
+# 8. Patching R2R to remove black lines around reactivity circles
+
+### The current version of R2R draws black lines around nucleotide reactivity circles, which do not look crisp. The creator of R2R, Zasha Weinburg, has provided a quick patch to remove the lines around circles. 
+
+### Step 1 In your bash terminal, use “cd” and “ls” to Navigate to the “R2R-1.0.6” folder
+
+### Step 2 Open the RnaDrawer.cpp script in the src folder using the vim text editor
+```{r}
+$vim R2R-1.0.6/src/RnaDrawer.cpp
+```
+
+### Step 3 Jump to line 1595 in vim
+
+```{r}
+1595 [shift] + g
+```
+
+### Step 4 Press [i] to go into editing mode. Delete the lines:
+
+```{r}
+pdf.SetLineWidth(posInfoVector[i].circleNucPenWidth);
+pdf.EdgeCircle(AdobeGraphics::Color_Black(),posInfoVector[i].pos,radius);
+```
+
+### Step 5 Press [Esc] to leave editing mode
+
+### Step 6 Save the changes and quit vim by typing:
+
+```{r}
+:wq
+```
+
+### Step 7 Remake R2R and Reinstall R2R
+
+```{r}
+$make
+$make install
+```
+
+### I will edit R2easyR to custom circle lines when a new version of R2R is released that supports this functionality. Until then, this patch will do.

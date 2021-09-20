@@ -60,6 +60,19 @@ r2easyR.stem_editor = function(R2R.sto){
                   ends_in_a_helix <- TRUE
                   next.N.start.stem <- FALSE
                 }
+              }else{
+                if (i != length(SS_cons)){
+                  if (SS_cons[(i+1)] == "<"){
+                    next.N.start.stem <- TRUE
+                    zoro_n_juction[stems] <- TRUE
+                  }else{
+                    zoro_n_juction[stems] <- FALSE
+                  }
+                }
+                if (i == length(SS_cons)){
+                  ends_in_a_helix <- TRUE
+                  next.N.start.stem <- FALSE
+                }
               }
             }
           }
