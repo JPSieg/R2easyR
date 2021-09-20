@@ -6,7 +6,7 @@
 #' @export
 peter.ct.reformat = function(file.ct){
 
-con = file("FSE.ct")
+con = file(file.ct)
 
 Lines = readLines(con)
 
