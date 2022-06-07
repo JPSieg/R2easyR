@@ -41,8 +41,6 @@ ry.tRNA = function(ct_file = "CT files",
     file.names[i] <- strsplit(toString(file.names[i]), split = "-maxexpect")[[1]][1]
   }
 
-  file.names
-
   ####Map reactivity to a palette and print the file####
 
   for (i in 1:length(df)){
@@ -82,6 +80,11 @@ ry.tRNA = function(ct_file = "CT files",
             ss <- c(ss, 1)
             if (length(ss) == 1){
               label.line <- c("a", label.line)
+              if (k == length(b)){
+                End.3.prime = TRUE
+              }else{
+                End.3.prime = FALSE
+              }
             }
             if (length(ss) != 1){
               label.line <- c(".", label.line)
@@ -99,18 +102,34 @@ ry.tRNA = function(ct_file = "CT files",
       }
     }
     lines <- lines[-length(lines)]
-    if (d == FALSE){
-      lines <- c(lines, c("#=GF R2R tick_label_regular_numbering 0 20 firstNucNum 1",
-                          "#=GF R2R set_dir pos0 90 f",
-                          "#=GF R2R place_explicit a++ a 45 1 0 0 0 90 f",
-                          "//"))
+
+    if (End.3.prime){
+      label.line = gsub("a", ".", label.line)
+      if (d == FALSE){
+        lines <- c(lines, c("#=GF R2R tick_label_regular_numbering 0 20 firstNucNum 1",
+                            "#=GF R2R set_dir pos0 90 f",
+                            "//"))
+      }
+      if (d == TRUE){
+        lines <- c(lines, c("#=GF R2R tick_label_regular_numbering 0 20 firstNucNum 1",
+                            "#=GF R2R place_explicit b b-- 45 1 0 0 0 90 f",
+                            "//"))
+      }
+    }else{
+      if (d == FALSE){
+        lines <- c(lines, c("#=GF R2R tick_label_regular_numbering 0 20 firstNucNum 1",
+                            "#=GF R2R set_dir pos0 90 f",
+                            "#=GF R2R place_explicit a++ a 45 1 0 0 0 90 f",
+                            "//"))
+      }
+      if (d == TRUE){
+        lines <- c(lines, c("#=GF R2R tick_label_regular_numbering 0 20 firstNucNum 1",
+                            "#=GF R2R place_explicit b b-- 45 1 0 0 0 90 f",
+                            "#=GF R2R place_explicit a++ a 45 1 0 0 0 90 f",
+                            "//"))
+      }
     }
-    if (d == TRUE){
-      lines <- c(lines, c("#=GF R2R tick_label_regular_numbering 0 20 firstNucNum 1",
-                          "#=GF R2R place_explicit b b-- 45 1 0 0 0 90 f",
-                          "#=GF R2R place_explicit a++ a 45 1 0 0 0 90 f",
-                          "//"))
-    }
+
     fileConn <- file(paste(output_file, "/", file.names[i], ".sto", sep = ""))
     writeLines(lines,
                fileConn)
