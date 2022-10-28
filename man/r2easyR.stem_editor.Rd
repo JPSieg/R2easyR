@@ -4,10 +4,12 @@
 \alias{r2easyR.stem_editor}
 \title{A function that optomizes the stem layout for a RNA 2-structure drawn with R2R}
 \usage{
-r2easyR.stem_editor(R2R.sto)
+r2easyR.stem_editor(R2R.sto, source = "R2easyR")
 }
 \arguments{
 \item{R2R.sto}{Path to the R2R stockholm file that contains the drawing information you want to optomize}
+
+\item{source}{Where you got the stockholm. Did you make it with "R2easyR" or did you make it with "R2R"? Used to parse the secondary structure line.}
 }
 \description{
 This function edits a R2R stockholm file to provide a better stem layout for most RNA. By default, R2R will place

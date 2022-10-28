@@ -7,13 +7,25 @@
 #'currently supports optimizing the layout of up a structure with up to 26 stems.
 #'
 #'@param R2R.sto Path to the R2R stockholm file that contains the drawing information you want to optomize
+#'@param source Where you got the stockholm. Did you make it with "R2easyR" or did you make it with "R2R"? Used to parse the secondary structure line.
 #' @export
-r2easyR.stem_editor = function(R2R.sto){
+r2easyR.stem_editor = function(R2R.sto,
+                               source = "R2easyR"){
 
   con <- file(R2R.sto)
   lines <- readLines(con)
 
-  SS_cons <- strsplit(strsplit(lines[3], split = "\t")[[1]][2], split = "")[[1]]
+  if (source == "R2easyR"){
+    SS_cons <- strsplit(strsplit(lines[3], split = "\t")[[1]][2], split = "")[[1]]
+  }
+  if (source == "R2R"){
+    SS_cons_line <- lines[which(grepl("#=GC SS_cons", lines))]
+    SS_cons_line = gsub("#=GC SS_cons", "", SS_cons_line)
+    SS_cons_line = gsub(" ", "", SS_cons_line)
+    SS_cons = strsplit(SS_cons_line, split = "")[[1]]
+    SS_cons[which(SS_cons == "(")] = "<"
+    SS_cons[which(SS_cons == ")")] = ">"
+  }
 
   open_pairs <- 0
   stems <- 0
