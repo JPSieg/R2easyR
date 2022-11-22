@@ -2,19 +2,19 @@
 % Please edit documentation in R/r2easyR.stem_editor.R
 \name{r2easyR.stem_editor}
 \alias{r2easyR.stem_editor}
-\title{A function that optomizes the stem layout for a RNA 2-structure drawn with R2R}
+\title{A function that optimizes the stem layout for a RNA 2-structure drawn with R2R}
 \usage{
 r2easyR.stem_editor(R2R.sto, source = "R2easyR")
 }
 \arguments{
-\item{R2R.sto}{Path to the R2R stockholm file that contains the drawing information you want to optomize}
+\item{R2R.sto}{Path to the R2R Stockholm file that contains the drawing information you want to optimize}
 
-\item{source}{Where you got the stockholm. Did you make it with "R2easyR" or did you make it with "R2R"? Used to parse the secondary structure line.}
+\item{source}{Where you got the Stockholm. Did you make it with "R2easyR" or did you make it with "R2R"? Used to parse the secondary structure line.}
 }
 \description{
-This function edits a R2R stockholm file to provide a better stem layout for most RNA. By default, R2R will place
+This function edits a R2R Stockholm file to provide a better stem layout for most RNA. By default, R2R will place
 adjacent stems on the same side of the line of the RNA backbone. This will cause the stems to clash in the figure
 if the stems are to close together in the 1-sequence. The r2easyR.stem_editor prevents this by flipping every other
-stem to the oposite side of the backbone using the R2R label line and the R2R place_explict command. The r2easyR.stem_editor
+stem to the opposite side of the backbone using the R2R label line and the R2R place_explicit command. The r2easyR.stem_editor
 currently supports optimizing the layout of up a structure with up to 26 stems.
 }

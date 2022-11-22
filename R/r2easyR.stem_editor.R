@@ -1,13 +1,13 @@
-#'A function that optomizes the stem layout for a RNA 2-structure drawn with R2R
+#'A function that optimizes the stem layout for a RNA 2-structure drawn with R2R
 #'
-#'This function edits a R2R stockholm file to provide a better stem layout for most RNA. By default, R2R will place
+#'This function edits a R2R Stockholm file to provide a better stem layout for most RNA. By default, R2R will place
 #'adjacent stems on the same side of the line of the RNA backbone. This will cause the stems to clash in the figure
 #'if the stems are to close together in the 1-sequence. The r2easyR.stem_editor prevents this by flipping every other
-#'stem to the oposite side of the backbone using the R2R label line and the R2R place_explict command. The r2easyR.stem_editor
+#'stem to the opposite side of the backbone using the R2R label line and the R2R place_explicit command. The r2easyR.stem_editor
 #'currently supports optimizing the layout of up a structure with up to 26 stems.
 #'
-#'@param R2R.sto Path to the R2R stockholm file that contains the drawing information you want to optomize
-#'@param source Where you got the stockholm. Did you make it with "R2easyR" or did you make it with "R2R"? Used to parse the secondary structure line.
+#'@param R2R.sto Path to the R2R Stockholm file that contains the drawing information you want to optimize
+#'@param source Where you got the Stockholm. Did you make it with "R2easyR" or did you make it with "R2R"? Used to parse the secondary structure line.
 #' @export
 r2easyR.stem_editor = function(R2R.sto,
                                source = "R2easyR"){
@@ -156,11 +156,11 @@ r2easyR.stem_editor = function(R2R.sto,
       }
     }
 
-    #print(paste("i =", i))
-    #print(paste("open pairs", open_pairs))
-    #print(paste("stems", stems))
-    #print(next.N.start.stem)
-    #print(R2R_LABEL)
+    print(paste("i =", i))
+    print(paste("open pairs", open_pairs))
+    print(paste("stems", stems))
+    print(next.N.start.stem)
+    print(R2R_LABEL)
 
   }
 
@@ -189,7 +189,7 @@ r2easyR.stem_editor = function(R2R.sto,
       }
     }
     if (ends_in_a_helix == TRUE){
-      for ( i in 1:(stems - 1)){
+      for (i in 1:(stems - 1)){
         if (i %% 2 == 0){
           if (zoro_n_juction[i-1]){
             lines <- c(lines[1:(length(lines)-1)],
@@ -209,9 +209,13 @@ r2easyR.stem_editor = function(R2R.sto,
                    paste("#=GF R2R place_explicit ", open_labels[(stems - 1)], " ", open_labels[(stems - 1)], "-- -45 1 0 0 0 0 f", sep = ""),
                    "//")
       }else{
-        lines <- c(lines[1:(length(lines)-1)],
-                   paste("#=GF R2R place_explicit ", open_labels[(stems - 1)], " ", open_labels[(stems - 1)], "-- 45 1 0 0 0 90 f", sep = ""),
-                   "//")
+
+        if (grepl(open_labels[(stems - 1)], gsub(", ", "", toString(R2R_LABEL)))){
+          lines <- c(lines[1:(length(lines)-1)],
+                     paste("#=GF R2R place_explicit ", open_labels[(stems - 1)], " ", open_labels[(stems - 1)], "-- 45 1 0 0 0 90 f", sep = ""),
+                     "//")
+        }
+
       }
     }
   }
