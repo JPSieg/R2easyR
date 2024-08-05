@@ -630,7 +630,7 @@ Output R2R meta and Stockholm files can be passed to r2r normally. The result of
 
 ![Add_pknots](https://user-images.githubusercontent.com/63312483/114207490-6c533280-992a-11eb-8368-b86711239f18.png)
 
-# 8. Patching R2R to remove black lines around reactivity circles
+## 8. Patching R2R to remove black lines around reactivity circles
 
 The current version of R2R draws black lines around nucleotide reactivity circles, which do not look crisp. The creator of R2R, Zasha Weinburg, has provided a quick patch to remove the lines around circles. 
 
@@ -670,3 +670,7 @@ $make install
 ```
 
 I will edit R2easyR to custom circle lines when a new version of R2R is released that supports this functionality. Until then, this patch will do.
+
+# Docker + Shiny UI (Experimental - need to have docker installed)
+
+To run R2easyR with a simple UI you can use docker. After downloading the repository `cd` into the repo directory and run `docker build -t r2easyrdock .`. If the build is successfull you can start a container with the command `docker run --rm -p 8080:8080 r2easyrdock` and access the UI through your browser at `localhost:8080`.
