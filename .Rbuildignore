@@ -1,2 +1,5 @@
 ^R2easyR\.Rproj$
 ^\.Rproj\.user$
+^R2easyR\setup
+^R2easyR\shinyapp
+^Dockerfile
